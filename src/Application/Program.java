@@ -9,8 +9,8 @@ import javafx.stage.Stage;
 
 public class Program extends Application {
     
-    private static Stage stage;
-    private static Scene mainScene;
+    public static Scene mainScene;
+    public static Stage stage;
 
     public void start(Stage primaryStage) {
         stage = primaryStage;
@@ -34,11 +34,10 @@ public class Program extends Application {
     public static Scene getMainScene(){
         return mainScene;
     }
-    
     public static Stage getMainStage(){
         return stage;
     }
-
+    
     public static void main(String[] args) {
         launch(args);
     }

@@ -2,6 +2,8 @@ package gui;
 
 import static Application.Program.getMainScene;
 import static Application.Program.getMainStage;
+import static Application.Program.mainScene;
+import static Application.Program.stage;
 import Model.entities.Cliente;
 import Model.entities.Processo;
 import Model.service.ClienteService;
@@ -13,6 +15,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -88,7 +92,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuItemPesquisaRapidaAction() {
-        Alert.showAlert("TESTE", "TESTE", "TESTE", AlertType.CONFIRMATION);
+        loadHome("/gui/MainView.fxml", x -> {});
     }
 
     @FXML
@@ -129,6 +133,27 @@ public class MainViewController implements Initializable {
         tableViewPesquisa.prefHeightProperty().bind(stage.heightProperty());
     }
 
+    private synchronized <T> void loadHome(String path, Consumer<T> acaoDeInicializacao) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+            ScrollPane scrollPane = loader.load();
+
+            Scene mainScene = getMainScene();
+            VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+
+            mainVBox.getChildren().clear();
+            mainVBox.getChildren().addAll(scrollPane.getContent());
+
+            T controller = loader.getController();
+            acaoDeInicializacao.accept(controller);
+        } catch (IOException ex) {
+            ex.getMessage();
+            ex.printStackTrace();
+
+            Alert.showAlert("IO Exception", "Erro para carregar a Página", "ERRO TA AKI", AlertType.ERROR);
+        }
+    }
+    
     private synchronized <T> void loadView(String path, Consumer<T> acaoDeInicializacao) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
