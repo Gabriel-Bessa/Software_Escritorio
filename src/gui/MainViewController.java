@@ -90,13 +90,13 @@ public class MainViewController implements Initializable {
         loadView("/gui/ProcessosLista.fxml", (ProcessosListaController controller) -> {
             controller.setProcessoService(new ProcessoService());
             controller.updateTableView();
-        });
+        }, "");
     }
 
     @FXML
     public void onMenuItemPesquisaRapidaAction() {
-        loadHome("/gui/MainView.fxml", x -> {
-        });
+        loadView("/gui/MainView.fxml", x -> {
+        }, "Main");
     }
 
     @FXML
@@ -108,7 +108,7 @@ public class MainViewController implements Initializable {
     @FXML
     public void onMenuItemAboutAction() {
         loadView("/gui/About.fxml", x -> {
-        });
+        }, "");
     }
 
     @Override
@@ -151,7 +151,7 @@ public class MainViewController implements Initializable {
         tableViewPesquisa.prefHeightProperty().bind(stage.heightProperty());
     }
 
-    private synchronized <T> void loadHome(String path, Consumer<T> acaoDeInicializacao) {
+    /* private synchronized <T> void loadHome(String path, Consumer<T> acaoDeInicializacao) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             ScrollPane scrollPane = loader.load();
@@ -165,33 +165,57 @@ public class MainViewController implements Initializable {
             T controller = loader.getController();
             acaoDeInicializacao.accept(controller);
         } catch (IOException ex) {
-            ex.getMessage();
             ex.printStackTrace();
-
             Alert.showAlert("IO Exception", "Erro para carregar a Página", "ERRO TA AKI", AlertType.ERROR);
         }
-    }
+    }*/
+    private synchronized <T> void loadView(String path, Consumer<T> acaoDeInicializacao, String s) {
+        if (s == "Main") {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+                ScrollPane scrollPane = loader.load();
+                
+                VBox main = (VBox) scrollPane.getContent();
+                main.getChildren().remove(0);
+                
+                Scene mainScene = getMainScene();
+                VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
 
-    private synchronized <T> void loadView(String path, Consumer<T> acaoDeInicializacao) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
-            VBox newVBox = loader.load();
+                
+                Node mainMenu = mainVBox.getChildren().get(0);
+                mainVBox.getChildren().clear();
+                mainVBox.getChildren().add(mainMenu);
+                mainVBox.getChildren().addAll((VBox) (main));
 
-            Scene mainScene = getMainScene();
-            VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+                T controller = loader.getController();
+                acaoDeInicializacao.accept(controller);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+                Alert.showAlert("IO Exception", "Erro para carregar a Página", "ERRO TA AKI", AlertType.ERROR);
+            }
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+                VBox newVBox = loader.load();
 
-            Node mainMenu = mainVBox.getChildren().get(0);
-            mainVBox.getChildren().clear();
-            mainVBox.getChildren().add(mainMenu);
-            mainVBox.getChildren().addAll(newVBox.getChildren());
+                Scene mainScene = getMainScene();
+                VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
 
-            T controller = loader.getController();
-            acaoDeInicializacao.accept(controller);
-        } catch (IOException ex) {
-            ex.getMessage();
-            ex.printStackTrace();
+                Node mainMenu = mainVBox.getChildren().get(0);
 
-            Alert.showAlert("IO Exception", "Erro para carregar a Página", ex.getMessage(), AlertType.ERROR);
+                mainVBox.getChildren().clear();
+                mainVBox.getChildren().add(mainMenu);
+                mainVBox.getChildren().addAll(newVBox.getChildren());
+
+                T controller = loader.getController();
+                acaoDeInicializacao.accept(controller);
+
+            } catch (IOException ex) {
+
+                ex.printStackTrace();
+                Alert.showAlert("IO Exception", "Erro para carregar a Página", ex.getMessage(), AlertType.ERROR);
+
+            }
         }
     }
 
