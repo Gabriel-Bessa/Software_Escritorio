@@ -63,7 +63,7 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Nome: " + nome +", ID: " + id + ", Telefone: " + telefone + ", Endereco: " + endereco + ", Processos: " + processos.size();
+        return "Nome: " + nome +", ID: " + id + ", Telefone: " + telefone + ", Endereco: " + endereco;
     }
     
     

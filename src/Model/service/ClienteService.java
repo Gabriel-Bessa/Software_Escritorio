@@ -13,4 +13,8 @@ public class ClienteService {
     public List<Cliente> findAll(){
         return dao.findAll();
     }
+    
+    public List<Cliente> findByPseudo(String nome){
+        return dao.findByPseudoNome(nome);
+    }
 }

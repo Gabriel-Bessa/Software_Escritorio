@@ -1,9 +1,6 @@
 package gui;
 
 import static Application.Program.getMainScene;
-import static Application.Program.getMainStage;
-import static Application.Program.mainScene;
-import static Application.Program.stage;
 import Model.entities.Cliente;
 import Model.entities.Processo;
 import Model.service.ClienteService;
@@ -15,8 +12,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -78,8 +73,12 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onBtnPesquisarAction() {
-        iniciarNodos();
-        updateTableView();
+        if (txtPesquisa.getText().trim().equals("")) {
+            Alert.showAlert("Pesquisa", "Valor inválido!", "Tente com nome válidos!!!", AlertType.ERROR);
+        } else {            
+            iniciarNodos();
+            updateTableView();
+        }
     }
 
     @FXML
@@ -92,13 +91,14 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuItemPesquisaRapidaAction() {
-        loadHome("/gui/MainView.fxml", x -> {});
+        loadHome("/gui/MainView.fxml", x -> {
+        });
     }
 
     @FXML
     public void teste() {
         Alert.showAlert("Teste", "Teste", "Teste", AlertType.CONFIRMATION);
-        
+
     }
 
     @FXML
@@ -109,14 +109,14 @@ public class MainViewController implements Initializable {
 
     @Override
     public void initialize(URL uri, ResourceBundle rb) {
-        
+
     }
 
     public void updateTableView() {
         if (service == null) {
             throw new IllegalStateException("Service está Nulo!");
-        }
-        List<Cliente> list = service.findAll();
+        }        
+        List<Cliente> list = service.findByPseudo(txtPesquisa.getText());
         obsList = FXCollections.observableArrayList(list);
         tableViewPesquisa.setItems(obsList);
     }
@@ -153,7 +153,7 @@ public class MainViewController implements Initializable {
             Alert.showAlert("IO Exception", "Erro para carregar a Página", "ERRO TA AKI", AlertType.ERROR);
         }
     }
-    
+
     private synchronized <T> void loadView(String path, Consumer<T> acaoDeInicializacao) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
