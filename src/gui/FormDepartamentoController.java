@@ -65,8 +65,5 @@ public class FormDepartamentoController implements Initializable {
         Limitante.setTextFieldMaxLength(txtNome, 30);
         
     }
-    /*public List<Area> getAreas(){
-        
-    }*/
 
 }

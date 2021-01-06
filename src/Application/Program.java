@@ -9,9 +9,11 @@ import javafx.stage.Stage;
 
 public class Program extends Application {
     
+    private static Stage stage;
     private static Scene mainScene;
 
     public void start(Stage primaryStage) {
+        stage = primaryStage;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainView.fxml"));
             ScrollPane scrollPane = loader.load();
@@ -31,6 +33,10 @@ public class Program extends Application {
     
     public static Scene getMainScene(){
         return mainScene;
+    }
+    
+    public static Stage getMainStage(){
+        return stage;
     }
 
     public static void main(String[] args) {
