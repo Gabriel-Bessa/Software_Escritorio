@@ -1,6 +1,7 @@
 package gui;
 
 import static Application.Program.getMainScene;
+import static Application.Program.stage;
 import Model.entities.Cliente;
 import Model.entities.Processo;
 import Model.service.ClienteService;
@@ -43,6 +44,9 @@ public class MainViewController implements Initializable {
     private Button btnPesquisar;
 
     @FXML
+    private Button btnLimpar;
+
+    @FXML
     private TableView<Cliente> tableViewPesquisa;
 
     @FXML
@@ -75,7 +79,7 @@ public class MainViewController implements Initializable {
     public void onBtnPesquisarAction() {
         if (txtPesquisa.getText().trim().equals("")) {
             Alert.showAlert("Pesquisa", "Valor inválido!", "Tente com nome válidos!!!", AlertType.ERROR);
-        } else {            
+        } else {
             iniciarNodos();
             updateTableView();
         }
@@ -115,14 +119,28 @@ public class MainViewController implements Initializable {
     public void updateTableView() {
         if (service == null) {
             throw new IllegalStateException("Service está Nulo!");
-        }        
+        }
         List<Cliente> list = service.findByPseudo(txtPesquisa.getText());
-        obsList = FXCollections.observableArrayList(list);
-        tableViewPesquisa.setItems(obsList);
+        if (list.size() == 0) {
+            Alert.showAlert("Pesquisa", "Cliente não encontrado", txtPesquisa.getText() + " não encontrado!", AlertType.ERROR);
+        } else {
+            obsList = FXCollections.observableArrayList(list);
+            tableViewPesquisa.setItems(obsList);
+        }
+
+    }
+
+    public void limparTableview() {
+        List<Cliente> s = tableViewPesquisa.getItems();
+        if (s.size() > 0) {
+            obsList.removeAll(s);
+            txtPesquisa.setText("");
+        } else {
+            txtPesquisa.setText("");
+        }
     }
 
     private void iniciarNodos() {
-        Limitante.setTextFieldInteger(txtPesquisa);
 
         tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
         tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
@@ -173,7 +191,7 @@ public class MainViewController implements Initializable {
             ex.getMessage();
             ex.printStackTrace();
 
-            Alert.showAlert("IO Exception", "Erro para carregar a Página", "ERRO TA AKI", AlertType.ERROR);
+            Alert.showAlert("IO Exception", "Erro para carregar a Página", ex.getMessage(), AlertType.ERROR);
         }
     }
 

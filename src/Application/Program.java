@@ -23,8 +23,8 @@ public class Program extends Application {
 
             mainScene = new Scene(scrollPane);
             primaryStage.setScene(mainScene);
-            primaryStage.setTitle("Sistema do Escritorio!");
             primaryStage.setMaximized(true);
+            primaryStage.setTitle("Sistema do Escritorio!");
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

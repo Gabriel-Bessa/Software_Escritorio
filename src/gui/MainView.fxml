@@ -55,6 +55,7 @@
                         <TableColumn fx:id="tableColumnProcessos" minWidth="0.0" prefWidth="713.60009765625" text="Processos" />
                     </columns>
                   </TableView>
+                  <Button fx:id="btnLimpar" layoutX="1140.0" layoutY="241.0" mnemonicParsing="false" onAction="#limparTableview" text="Limpar!" />
                </children>
             </Pane>
             </children>
