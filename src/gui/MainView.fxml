@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1500.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1800.0" prefWidth="2000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
     <content>
         <VBox prefHeight="1199.0" prefWidth="1423.0">
             <children>
@@ -26,10 +26,22 @@
                      </items></Menu>
                         <Menu mnemonicParsing="false" text="Registrar">
                             <items>
-                                <MenuItem fx:id="menuItemSeller" mnemonicParsing="false" onAction="#onMenuItemSellerAction" text="Cliente" />
-                                <MenuItem fx:id="menuItemProcessos" mnemonicParsing="false" onAction="#onMenuItemProcessos" text="Departamento" />
+                                <MenuItem fx:id="menuItemRegistroCliente" mnemonicParsing="false" onAction="#onMenuItemRegistrarCliente" text="Cliente" />
+                                <MenuItem fx:id="menuItemRegistroProcessos" mnemonicParsing="false" onAction="#onMenuItemProcessos" text="Processos" />
                             </items>
                         </Menu>
+                  <Menu mnemonicParsing="false" text="Atualizar">
+                     <items>
+                        <MenuItem fx:id="menuItemAtualizarCliente" mnemonicParsing="false" text="Cliente" />
+                        <MenuItem fx:id="menuItemAtualizarProcessos" mnemonicParsing="false" text="Processo" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Excluir">
+                     <items>
+                        <MenuItem fx:id="menuItemDeletarCliente" mnemonicParsing="false" text="Cliente" />
+                        <MenuItem fx:id="menuItemDeletarProcessos" mnemonicParsing="false" text="Processo" />
+                     </items>
+                  </Menu>
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
                                 <MenuItem fx:id="menuItemAbout" mnemonicParsing="false" onAction="#onMenuItemAboutAction" text="Sobre" />
@@ -45,14 +57,15 @@
                      </font>
                   </Text>
                   <Label layoutX="795.0" layoutY="245.0" text="Nome:" />
-                  <TextField fx:id="txtPesquisa" layoutX="842.0" layoutY="241.0" prefHeight="25.0" prefWidth="201.0" />
+                  <TextField fx:id="txtPesquisa" layoutX="842.0" layoutY="241.0" prefHeight="25.0" prefWidth="201.0" promptText="Digite o nome do cliente..." />
                   <Button fx:id="btnPesquisar" layoutX="1049.0" layoutY="241.0" mnemonicParsing="false" onAction="#onBtnPesquisarAction" text="Pesquisar!" />
-                  <TableView fx:id="tableViewPesquisa" layoutX="165.0" layoutY="298.0" prefHeight="411.0" prefWidth="1584.0">
+                  <TableView fx:id="tableViewPesquisa" layoutY="293.0" prefHeight="411.0" prefWidth="1953.0">
                     <columns>
                       <TableColumn fx:id="tableColumnNome" prefWidth="270.3999938964844" text="Nome" />
                       <TableColumn fx:id="tableColumnTelefone" minWidth="0.0" prefWidth="299.199951171875" text="Telefone" />
-                        <TableColumn fx:id="tableColumnEndereco" minWidth="0.0" prefWidth="299.199951171875" text="Endereço" />
-                        <TableColumn fx:id="tableColumnProcessos" minWidth="0.0" prefWidth="713.60009765625" text="Processos" />
+                        <TableColumn fx:id="tableColumnEndereco" minWidth="0.0" prefWidth="415.20001220703125" text="Endereço" />
+                        <TableColumn fx:id="tableColumnProcessos" minWidth="0.0" prefWidth="396.7999267578125" text="Processos" />
+                        <TableColumn fx:id="tableColumnObservacoes" minWidth="0.0" prefWidth="569.800048828125" text="Observações" />
                     </columns>
                   </TableView>
                   <Button fx:id="btnLimpar" layoutX="1140.0" layoutY="241.0" mnemonicParsing="false" onAction="#limparTableview" text="Limpar!" />

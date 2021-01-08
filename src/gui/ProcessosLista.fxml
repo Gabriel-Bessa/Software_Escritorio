@@ -25,17 +25,18 @@
           <Button fx:id="btnNew" mnemonicParsing="false" onAction="#onBtnNewAction" text="Novo" />
             <Button alignment="CENTER" mnemonicParsing="false" mouseTransparent="true" text="Ir para o TRT" />
             <Button alignment="CENTER" mnemonicParsing="false" mouseTransparent="true" text="Ir para o PJE" />
-            <Button fx:id="btnPesquisa" mnemonicParsing="false" onAction="#onBtnNewAction" text="teste" />
-            <TextField fx:id="txtPesquisa" prefHeight="26.0" prefWidth="240.0" promptText="Numero do processo..." />
+            <Button fx:id="btnPesquisa" alignment="CENTER" mnemonicParsing="false" onAction="#onBtnPesquisarAction" text="Pesquisar: " />
+            <TextField fx:id="txtPesquisa" alignment="CENTER" prefHeight="26.0" prefWidth="240.0" promptText="Numero do processo..." />
         </items>
       </ToolBar>
-      <TableView fx:id="tableviewProcessos" prefHeight="1500.0" prefWidth="1800.0">
+      <TableView fx:id="tableviewProcessos" onMouseClicked="#visualizarProcesso" prefHeight="1500.0" prefWidth="1800.0">
         <columns>
           <TableColumn fx:id="tableColumnId" prefWidth="77.60000306367874" text="Id" />
             <TableColumn fx:id="tableColumnNum" minWidth="0.0" prefWidth="304.0" text="Numero" />
             <TableColumn fx:id="tableColumnCausa" prefWidth="284.0001220703125" text="Causa" />
             <TableColumn fx:id="tableColumnNomeCliente" prefWidth="332.7999267578125" text="Nome Cliente" />
-            <TableColumn fx:id="tableColumnCliente" prefWidth="668.0000610351562" text="Cliente" />
+            <TableColumn fx:id="tableColumnCliente" prefWidth="800.7999877929688" text="Cliente" />
+            <TableColumn fx:id="tableColumnCliente1" prefWidth="536.7999267578125" text="Observacoes" />
         </columns>
       </TableView>
    </children>

@@ -1,13 +1,11 @@
 package gui;
 
 import static Application.Program.getMainScene;
-import static Application.Program.stage;
 import Model.entities.Cliente;
 import Model.entities.Processo;
 import Model.service.ClienteService;
 import Model.service.ProcessoService;
 import gui.util.Alert;
-import gui.util.Limitante;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -60,18 +58,33 @@ public class MainViewController implements Initializable {
 
     @FXML
     private TableColumn<Cliente, List<Processo>> tableColumnProcessos;
+    
+    @FXML
+    private TableColumn<Cliente, List<Processo>> tableColumnObservacoes;
 
     @FXML
-    private MenuItem menuItemSeller;
+    private MenuItem menuItemRegistroCliente;
 
     @FXML
-    private MenuItem menuItemProcessos;
+    private MenuItem menuItemRegistroProcessos;
+    
+    @FXML
+    private MenuItem menuItemAtualizarCliente;
+
+    @FXML
+    private MenuItem menuItemAtualizarProcessos;
+    
+    @FXML
+    private MenuItem menuItemDeletarCliente;
+
+    @FXML
+    private MenuItem menuItemDeletarProcessos;
 
     @FXML
     private MenuItem menuItemAbout;
 
     @FXML
-    public void onMenuItemSellerAction() {
+    public void onMenuItemClienteAction() {
         System.out.println("onMenuItemSellerAction");
     }
 
@@ -86,17 +99,22 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
+    public void onMenuItemRegistrarCliente(){
+        loadView("/gui/ClienteLista.fxml", x -> {} , "");
+    }
+    
+    @FXML
     public void onMenuItemProcessos() {
         loadView("/gui/ProcessosLista.fxml", (ProcessosListaController controller) -> {
             controller.setProcessoService(new ProcessoService());
+            controller.setServiceC(new ClienteService());
             controller.updateTableView();
         }, "");
     }
 
     @FXML
     public void onMenuItemPesquisaRapidaAction() {
-        loadView("/gui/MainView.fxml", x -> {
-        }, "Main");
+        loadView("/gui/MainView.fxml", x -> {} , "Main");
     }
 
     @FXML
@@ -146,29 +164,13 @@ public class MainViewController implements Initializable {
         tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
         tableColumnEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
         tableColumnProcessos.setCellValueFactory(new PropertyValueFactory<>("processos"));
+        tableColumnObservacoes.setCellValueFactory(new PropertyValueFactory<>("observacoes"));
+        
 
         Stage stage = (Stage) getMainScene().getWindow();
         tableViewPesquisa.prefHeightProperty().bind(stage.heightProperty());
     }
-
-    /* private synchronized <T> void loadHome(String path, Consumer<T> acaoDeInicializacao) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
-            ScrollPane scrollPane = loader.load();
-
-            Scene mainScene = getMainScene();
-            VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
-
-            mainVBox.getChildren().clear();
-            mainVBox.getChildren().addAll(scrollPane.getContent());
-
-            T controller = loader.getController();
-            acaoDeInicializacao.accept(controller);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            Alert.showAlert("IO Exception", "Erro para carregar a Página", "ERRO TA AKI", AlertType.ERROR);
-        }
-    }*/
+    
     private synchronized <T> void loadView(String path, Consumer<T> acaoDeInicializacao, String s) {
         if (s == "Main") {
             try {

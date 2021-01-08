@@ -8,19 +8,29 @@ public class Cliente {
     private String nome;
     private String telefone;
     private String endereco;
+    private String observacoes;
     private List<Processo> processos;
 
     public Cliente() {
     }
-
-    public Cliente(int id, String nome, String telefone, String endereco, List<Processo> processos) {
+    public Cliente(int id, String nome, String telefone, String endereco, String observacoes, List<Processo> processos) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.endereco = endereco;
+        this.observacoes = observacoes;
         this.processos = processos;
     }
 
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
+    
     public int getId() {
         return id;
     }
@@ -63,7 +73,7 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Nome: " + nome +", ID: " + id + ", Telefone: " + telefone + ", Endereco: " + endereco;
+        return "Nome: " + nome +", ID: " + id + ", Telefone: " + telefone + ", Endereco: " + endereco + ", Observações: " + observacoes;
     }
     
     

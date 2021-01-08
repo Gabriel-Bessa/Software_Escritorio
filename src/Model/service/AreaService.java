@@ -9,6 +9,8 @@ public class AreaService {
 
     private AreaDAO dao = Fabrica_dao.creAreaDAO();
     
+    
+    
     public List<Area> findAll(){
         return dao.findAll();
     }

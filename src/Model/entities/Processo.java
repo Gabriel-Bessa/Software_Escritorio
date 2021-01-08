@@ -6,15 +6,22 @@ public class Processo {
     private String num;
     private String causa;
     private String nomecliente;
-    private Cliente cliente;
+    private int id_cliente;
 
-    public Processo(int id, String num, String causa, String nomecliente, Cliente cliente) {
+    public Processo(int id, String num, String causa, String nomecliente, int id_cliente) {
         this.id = id;
         this.num = num;
         this.causa = causa;
         this.nomecliente = nomecliente;
-        this.cliente = cliente;
+        this.id_cliente = id_cliente;
     }
+
+    public Processo(String num, String causa, String nomecliente, int id_cliente) {
+        this.num = num;
+        this.causa = causa;
+        this.nomecliente = nomecliente;
+        this.id_cliente = id_cliente;
+    }    
 
     public Processo() {
     }
@@ -43,12 +50,12 @@ public class Processo {
         this.causa = causa;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public int getId_cliente() {
+        return id_cliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setId_cliente(int id_cliente) {
+        this.id_cliente = id_cliente;
     }
 
     public String getNum() {
@@ -59,16 +66,9 @@ public class Processo {
         this.num = num;
     }
 
-    public String getNomecliente() {
-        return nomecliente;
-    }
-
-    public void setNomecliente(String nomecliente) {
-        this.nomecliente = nomecliente;
-    }
 
     @Override
     public String toString() {
-        return "Processo| id: " + id + ", num: " + num + ", Área: " + causa + ", nomeCliente: ";
+        return "Processo| id: " + id + ", num: " + num + ", Área: " + causa + ", nomeCliente: " + nomecliente;
     }
 }
