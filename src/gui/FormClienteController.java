@@ -3,7 +3,6 @@ package gui;
 import Model.entities.Area;
 import Model.service.AreaService;
 import Model.service.ProcessoService;
-import gui.util.Alert;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.ObservableList;

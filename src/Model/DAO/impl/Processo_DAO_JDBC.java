@@ -4,8 +4,8 @@ import Model.DAO.ProcessoDAO;
 import Model.entities.Cliente;
 import Model.entities.Processo;
 import Model.service.ClienteService;
-import Model.service.ProcessoService;
 import db.DB;
+import static gui.ProcessosListaController.serviceC;
 import gui.util.Alert;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,17 +19,12 @@ public class Processo_DAO_JDBC implements ProcessoDAO {
 
     private Connection con;
 
-    private ClienteService service;
-    private ProcessoService serviceProcesso;
+    private ClienteService service = serviceC;
 
     public void setService(ClienteService service) {
         this.service = service;
     }
 
-    public void setServiceProcesso(ProcessoService serviceProcesso) {
-        this.serviceProcesso = serviceProcesso;
-    }
-    
     public Processo_DAO_JDBC(Connection con) {
         this.con = con;
     }

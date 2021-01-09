@@ -36,7 +36,7 @@
             <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
                   <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#btnSalvarOnAction" text="Salvar" />
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#btnCancelarOnAcation" text="Cancelar" />
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#onBtnCancelarAction" text="Cancelar" />
                </children>
             </HBox>
             <ComboBox fx:id="comboBoxAreas" prefHeight="26.0" prefWidth="282.0" promptText="Escolha o tipo do processo..." GridPane.columnIndex="1" GridPane.rowIndex="2" />

@@ -7,12 +7,18 @@ import Model.service.AreaService;
 import Model.service.ClienteService;
 import Model.service.ProcessoService;
 import gui.util.Alert;
-import gui.util.Limitante;
 import static gui.util.Utils.stageAtual;
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +31,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -32,19 +39,24 @@ import javafx.stage.Stage;
 
 public class ProcessosListaController implements Initializable {
 
-    private ProcessoService service;
+    public static ProcessoService serviceProcesso;
+    public static ClienteService serviceC;
 
     public Processo p;
 
     private static Cliente pesquisa;
 
-    private ClienteService serviceC;
+    @FXML
+    private ImageView logo;
 
     @FXML
     private Button btnPesquisa;
 
     @FXML
     private Button btnTeste;
+
+    @FXML
+    private Button btnIrParaOPje;
 
     @FXML
     private TextField txtPesquisa;
@@ -65,31 +77,42 @@ public class ProcessosListaController implements Initializable {
     private TableColumn<Processo, String> tableColumnNomeCliente;
 
     @FXML
-    private TableColumn<Processo, Cliente> tableColumnCliente;
-
-    @FXML
     private Button btnNew;
 
     private ObservableList<Processo> obsList;
 
     @FXML
-    public void visualizarProcesso() {
+    public void onbtnIrParaOPjeAction() {
+
+        try {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI("https://pje.trt3.jus.br/primeirograu/login.seam"));
+            }
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    @FXML
+public void visualizarProcesso() {
         this.p = tableviewProcessos.getSelectionModel().getSelectedItem();
         this.pesquisa = serviceC.findByClienteById(p.getId_cliente());
         btnPesquisa.setText("Pesquisar: " + p.getNomeCliente());
     }
 
     @FXML
-    public void onBtnPesquisarAction(ActionEvent event) {
+public void onBtnPesquisarAction(ActionEvent event) {
         Stage novo = new Stage();
         novo.setTitle("Teste");
-        
+
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CarregarCliente.fxml"));  
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CarregarCliente.fxml"));
             loader.setController(new CarregarClienteController(pesquisa));
             VBox vbox = loader.load();
-            
-            
+
             novo.setScene(new Scene(vbox));
             novo.show();
         } catch (Exception e) {
@@ -98,24 +121,24 @@ public class ProcessosListaController implements Initializable {
     }
 
     @FXML
-    public void teste() {
+public void teste() {
         Processo p = tableviewProcessos.getSelectionModel().getSelectedItem();
         this.pesquisa = serviceC.findByClienteById(p.getId_cliente());
     }
 
     @FXML
-    public void onBtnNewAction(ActionEvent event) {
+public void onBtnNewAction(ActionEvent event) {
         Stage parentStage = stageAtual(event);
         createDialogForm("/gui/FormDepartamento.fxml", parentStage);
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+public void initialize(URL url, ResourceBundle rb) {
         iniciarNodos();
     }
 
     public void setProcessoService(ProcessoService service) {
-        this.service = service;
+        this.serviceProcesso = service;
     }
 
     public void setServiceC(ClienteService serviceC) {
@@ -123,23 +146,20 @@ public class ProcessosListaController implements Initializable {
     }
 
     private void iniciarNodos() {
-        Limitante.setTextFieldInteger(txtPesquisa);
-
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableColumnNum.setCellValueFactory(new PropertyValueFactory<>("num"));
         tableColumnCausa.setCellValueFactory(new PropertyValueFactory<>("causa"));
-        tableColumnCliente.setCellValueFactory(new PropertyValueFactory<>("id_cliente"));
         tableColumnNomeCliente.setCellValueFactory(new PropertyValueFactory<>("nomeCliente"));
         Stage stage = (Stage) Program.getMainScene().getWindow();
         tableviewProcessos.prefHeightProperty().bind(stage.heightProperty());
     }
 
     public void updateTableView() {
-        if (service == null) {
+        if (serviceProcesso == null) {
             throw new IllegalStateException("Service está Nulo!");
         }
-        service.setService(serviceC);
-        List<Processo> list = service.findAll();
+        serviceProcesso.setService(serviceC);
+        List<Processo> list = serviceProcesso.findAll();
         obsList = FXCollections.observableArrayList(list);
         tableviewProcessos.setItems(obsList);
     }

@@ -7,6 +7,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -20,25 +22,34 @@
             <Insets left="5.0" top="5.0" />
          </padding>
       </Label>
-      <ToolBar prefHeight="40.0" prefWidth="200.0">
+      <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="btnNew" mnemonicParsing="false" onAction="#onBtnNewAction" text="Novo" />
             <Button alignment="CENTER" mnemonicParsing="false" mouseTransparent="true" text="Ir para o TRT" />
-            <Button alignment="CENTER" mnemonicParsing="false" mouseTransparent="true" text="Ir para o PJE" />
+            <Button fx:id="btnIrParaOPje" alignment="CENTER" mnemonicParsing="false" onAction="#onbtnIrParaOPjeAction" text="Ir para o PJE" />
             <Button fx:id="btnPesquisa" alignment="CENTER" mnemonicParsing="false" onAction="#onBtnPesquisarAction" text="Pesquisar: " />
             <TextField fx:id="txtPesquisa" alignment="CENTER" prefHeight="26.0" prefWidth="240.0" promptText="Numero do processo..." />
         </items>
+         <padding>
+            <Insets left="650.0" />
+         </padding>
       </ToolBar>
-      <TableView fx:id="tableviewProcessos" onMouseClicked="#visualizarProcesso" prefHeight="1500.0" prefWidth="1800.0">
-        <columns>
-          <TableColumn fx:id="tableColumnId" prefWidth="77.60000306367874" text="Id" />
-            <TableColumn fx:id="tableColumnNum" minWidth="0.0" prefWidth="304.0" text="Numero" />
-            <TableColumn fx:id="tableColumnCausa" prefWidth="284.0001220703125" text="Causa" />
-            <TableColumn fx:id="tableColumnNomeCliente" prefWidth="332.7999267578125" text="Nome Cliente" />
-            <TableColumn fx:id="tableColumnCliente" prefWidth="800.7999877929688" text="Cliente" />
-            <TableColumn fx:id="tableColumnCliente1" prefWidth="536.7999267578125" text="Observacoes" />
-        </columns>
-      </TableView>
+      <HBox prefHeight="348.0" prefWidth="1800.0">
+         <children>
+            <Pane prefHeight="571.0" prefWidth="1800.0">
+               <children>
+                  <TableView fx:id="tableviewProcessos" layoutX="442.0" layoutY="21.0" onMouseClicked="#visualizarProcesso" prefHeight="100.0" prefWidth="1001.0">
+                     <columns>
+                        <TableColumn fx:id="tableColumnId" prefWidth="77.60000306367874" text="Id" />
+                        <TableColumn fx:id="tableColumnNum" minWidth="0.0" prefWidth="304.0" text="Numero" />
+                        <TableColumn fx:id="tableColumnCausa" prefWidth="284.0001220703125" text="Causa" />
+                        <TableColumn fx:id="tableColumnNomeCliente" prefWidth="332.7999267578125" text="Nome Cliente" />
+                     </columns>
+                  </TableView>
+               </children>
+            </Pane>
+         </children>
+      </HBox>
    </children>
    <opaqueInsets>
       <Insets left="5.0" top="5.0" />

@@ -11,31 +11,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Area_DAO_JDBC implements AreaDAO {
-
+    // Implementa os metodos da classe abstrata AreaDAO
+    
+    // Variavel para armazenar a conexão com o DB
     private Connection con;
 
+    // Construtor com a injeção da conexão com o DB
     public Area_DAO_JDBC(Connection con) {
         this.con = con;
     }
-
+    
+    // Método para inserção de uma área no DB
     @Override
     public void inserir(Area a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
+    // Método para a exclusão de uma área no DB
     @Override
     public void deletar(Area a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    // Método para atualizar uma área no DB
     @Override
     public void atualizar(Area a) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    // Método que retorna todas as areas presentes no DB
     @Override
     public List<Area> findAll() {
+        // Instacia um objeto PreparedStatment para comportar o SQL
         PreparedStatement st = null;
+        // Instancia um objeto ResultSet para receber os resultas da busca
         ResultSet rs = null;
         try {
             st = con.prepareStatement("SELECT * FROM areas");

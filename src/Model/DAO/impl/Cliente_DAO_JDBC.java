@@ -2,9 +2,9 @@ package Model.DAO.impl;
 
 import Model.DAO.ClienteDAO;
 import Model.entities.Cliente;
-import Model.service.ClienteService;
 import Model.service.ProcessoService;
 import db.DB;
+import static gui.ProcessosListaController.serviceProcesso;
 import gui.util.Alert;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,12 +17,10 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
 
     private Connection con;
 
-    private ProcessoService service;
-    private ClienteService serviceCliente;
+    private ProcessoService service = serviceProcesso;
 
     public Cliente_DAO_JDBC(Connection con) {
         this.con = con;
-        service = new ProcessoService();
         
     }
 
@@ -156,11 +154,7 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
     public void setService(ProcessoService service) {
         this.service = service;
     }
-
-    public void setServiceCliente(ClienteService serviceCliente) {
-        this.serviceCliente = serviceCliente;
-    }    
-    
+   
     public static String finNomeByClienteID(int id) {
         return "Gabriel";
     }

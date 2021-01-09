@@ -1,6 +1,7 @@
 package gui;
 
 import Model.entities.Area;
+import Model.entities.Cliente;
 import Model.entities.Processo;
 import Model.service.AreaService;
 import Model.service.ClienteService;
@@ -18,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 public class FormDepartamentoController implements Initializable {
 
@@ -56,18 +58,24 @@ public class FormDepartamentoController implements Initializable {
         this.serviceCliente = serviceCliente;
     }
 
+    public void onBtnCancelarAction() {
+        Stage window = (Stage) btnCancelar.getScene().getWindow();
+        window.close();
+    }
+
     @FXML
     public void btnSalvarOnAction() {
         if (txtNum.getText().trim().equals("") || txtNomeCliente.getText().trim().equals("")) {
             Alert.showAlert("Registro", "Erro no registro!", "Preencha os campos para registrar-lo!", javafx.scene.control.Alert.AlertType.ERROR);
         } else {
-            if (serviceCliente == null) {
-                Alert.showAlert("Ta fudido meu parceiro", "Ta fudido meu parceiro", "Ta fudido meu parceiro", javafx.scene.control.Alert.AlertType.ERROR);
+            Cliente id = serviceCliente.findByNome(txtNomeCliente.getText());
+            if (id == null) {
+                Alert.showAlert("Cliente Não encontrado", "O Cliente: " + txtNomeCliente.getText() + " não consta na base de dados!", "Tente novamente!", javafx.scene.control.Alert.AlertType.ERROR);
             } else {
-                System.out.println(serviceCliente.findByPseudo(txtNomeCliente.getText()).size());
                 Processo p = new Processo(txtNum.getText(), comboBoxAreas.getSelectionModel().getSelectedItem().getNome(), txtNomeCliente.getText(), serviceCliente.findByNome(txtNomeCliente.getText()).getId());
                 serviceProcesso.insert(p);
-                Alert.showAlert("Registro", "Registrado com sucesso!", txtNum.getText() + " foi adicionado com sucesso!", javafx.scene.control.Alert.AlertType.CONFIRMATION);
+                Alert.showAlert("Regitrado!", "Cliente Adicionado Com sucesso!", "Adicionado na base de dados!", javafx.scene.control.Alert.AlertType.CONFIRMATION);
+                onBtnCancelarAction();
             }
         }
     }
