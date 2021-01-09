@@ -10,15 +10,11 @@ import gui.util.Alert;
 import static gui.util.Utils.stageAtual;
 import java.awt.Desktop;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -39,8 +36,8 @@ import javafx.stage.Stage;
 
 public class ProcessosListaController implements Initializable {
 
-    public static ProcessoService serviceProcesso;
-    public static ClienteService serviceC;
+    private ProcessoService serviceProcesso;
+    private ClienteService serviceC;
 
     public Processo p;
 
@@ -95,18 +92,17 @@ public class ProcessosListaController implements Initializable {
         }
     }
 
-
     @FXML
-public void visualizarProcesso() {
+    public void visualizarProcesso() {
         this.p = tableviewProcessos.getSelectionModel().getSelectedItem();
         this.pesquisa = serviceC.findByClienteById(p.getId_cliente());
         btnPesquisa.setText("Pesquisar: " + p.getNomeCliente());
     }
 
     @FXML
-public void onBtnPesquisarAction(ActionEvent event) {
+    public void onBtnPesquisarAction(ActionEvent event) {
         Stage novo = new Stage();
-        novo.setTitle("Teste");
+        novo.setTitle("Cliente");
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CarregarCliente.fxml"));
@@ -121,19 +117,19 @@ public void onBtnPesquisarAction(ActionEvent event) {
     }
 
     @FXML
-public void teste() {
+    public void teste() {
         Processo p = tableviewProcessos.getSelectionModel().getSelectedItem();
         this.pesquisa = serviceC.findByClienteById(p.getId_cliente());
     }
 
     @FXML
-public void onBtnNewAction(ActionEvent event) {
+    public void onBtnNewAction(ActionEvent event) {
         Stage parentStage = stageAtual(event);
         createDialogForm("/gui/FormDepartamento.fxml", parentStage);
     }
 
     @Override
-public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) {
         iniciarNodos();
     }
 

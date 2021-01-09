@@ -8,7 +8,10 @@ import Model.service.ProcessoService;
 import gui.util.Alert;
 import gui.util.Limitante;
 import static gui.util.Utils.stageAtual;
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -53,25 +56,29 @@ public class ClienteListController implements Initializable{
     private TextField txtPesquisa;
     
     @FXML    
-    private TableView<Processo> tableviewCliente;
+    private TableView<Cliente> tableviewCliente;
     
     @FXML
-    private TableColumn<Processo, Integer> tableColumnId;
+    private TableColumn<Cliente, Integer> tableColumnId;
         
     @FXML 
-    private TableColumn<Processo, String> tableColumnNome;
+    private TableColumn<Cliente, String> tableColumnNome;
     
     @FXML
-    private TableColumn<Processo, String> tableColumnTelefone;
+    private TableColumn<Cliente, String> tableColumnTelefone;
     
     @FXML
-    private TableColumn<Processo, String> tableColumnEndereco;
+    private TableColumn<Cliente, String> tableColumnEndereco;
+    
     @FXML
-    private TableColumn<Processo, List<Processo>> tableColumnProcessos;
+    private TableColumn<Cliente, String> tableColumnObservacoes;
+    
+    @FXML
+    private TableColumn<Cliente, List<Processo>> tableColumnProcesso;
     
     
     
-    private ObservableList<Processo> obsList; 
+    private ObservableList<Cliente> obsList; 
     
     @FXML
     public void onBtnNewAction(ActionEvent event){
@@ -92,17 +99,29 @@ public class ClienteListController implements Initializable{
         this.serviceC = serviceC;
     }
     
-    
-    
+    @FXML
+    public void onbtnIrParaOPjeAction() {
+
+        try {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI("https://pje.trt3.jus.br/primeirograu/login.seam"));
+            }
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }    
         
     private void iniciarNodos() {
         Limitante.setTextFieldInteger(txtPesquisa);
         
-        tableColumnId.setCellValueFactory(new PropertyValueFactory<>(""));
-        tableColumnEndereco.setCellValueFactory(new PropertyValueFactory<>(""));
-        tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>(""));
-        tableColumnNome.setCellValueFactory(new PropertyValueFactory<>(""));
-        tableColumnProcessos.setCellValueFactory(new PropertyValueFactory<>(""));
+        tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tableColumnEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
+        tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
+        tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        tableColumnObservacoes.setCellValueFactory(new PropertyValueFactory<>("observacoes"));
+        tableColumnProcesso.setCellValueFactory(new PropertyValueFactory<>("processos"));
         Stage stage = (Stage) Program.getMainScene().getWindow();
         tableviewCliente.prefHeightProperty().bind(stage.heightProperty());
     }
@@ -111,8 +130,7 @@ public class ClienteListController implements Initializable{
         if(service == null){
             throw new IllegalStateException("Service está Nulo!");
         }
-        service.setService(serviceC);
-        List<Processo> list = service.findAll();
+        List<Cliente> list = serviceC.findAll();
         obsList = FXCollections.observableArrayList(list);
         tableviewCliente.setItems(obsList);
     }

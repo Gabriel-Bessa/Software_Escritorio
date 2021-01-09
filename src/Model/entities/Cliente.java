@@ -13,6 +13,7 @@ public class Cliente {
 
     public Cliente() {
     }
+
     public Cliente(int id, String nome, String telefone, String endereco, String observacoes, List<Processo> processos) {
         this.id = id;
         this.nome = nome;
@@ -30,7 +31,6 @@ public class Cliente {
         this.observacoes = observacoes;
     }
 
-    
     public int getId() {
         return id;
     }
@@ -73,9 +73,12 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Nome: " + nome +", ID: " + id + ", Telefone: " + telefone + ", Endereco: " + endereco + ", Observações: " + observacoes;
+        if (observacoes == null || observacoes == "") { 
+            return  "-----*-----*-----*-----\n Nome: " + nome + ", ID: " + id + ", Telefone: " + telefone + ", Endereco: " + endereco +", Processos: " + processos.toString() + ", Observações: Nenhuma! \n-----*-----*-----*-----\n";
+        }else {
+            return "-----*-----*-----*-----\n Nome: " + nome + ", ID: " + id + ", Telefone: " + telefone + ", Endereco: " + endereco +", Processos: " + processos.toString() + ", Observações: " + observacoes + "\n-----*-----*-----*-----\n\n"
+                    ;
+        }
     }
-    
-    
-    
+
 }

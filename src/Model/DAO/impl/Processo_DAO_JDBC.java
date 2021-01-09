@@ -5,7 +5,7 @@ import Model.entities.Cliente;
 import Model.entities.Processo;
 import Model.service.ClienteService;
 import db.DB;
-import static gui.ProcessosListaController.serviceC;
+import static gui.MainViewController.serviceCliente;
 import gui.util.Alert;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +19,7 @@ public class Processo_DAO_JDBC implements ProcessoDAO {
 
     private Connection con;
 
-    private ClienteService service = serviceC;
+    private ClienteService service = serviceCliente;
 
     public void setService(ClienteService service) {
         this.service = service;

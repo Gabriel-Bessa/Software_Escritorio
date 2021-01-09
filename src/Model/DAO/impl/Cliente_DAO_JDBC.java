@@ -4,7 +4,7 @@ import Model.DAO.ClienteDAO;
 import Model.entities.Cliente;
 import Model.service.ProcessoService;
 import db.DB;
-import static gui.ProcessosListaController.serviceProcesso;
+import static gui.MainViewController.serviceProcesso;
 import gui.util.Alert;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
 
     public Cliente_DAO_JDBC(Connection con) {
         this.con = con;
-        
+
     }
 
     @Override
@@ -72,10 +72,10 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
 
     @Override
     public Cliente findByNome(String nome) {
-        
+
         PreparedStatement st = null;
         ResultSet rs = null;
-        
+
         try {
             st = con.prepareStatement("SELECT * FROM cliente "
                     + "WHERE nome = ?");
@@ -132,7 +132,25 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
 
     @Override
     public List<Cliente> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Cliente> list = new ArrayList<>();
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = con.prepareStatement("SELECT * FROM cliente");
+
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Cliente c = instanciaCliente(rs);
+                list.add(c);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new db.dbException(e.getMessage());
+        } finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+        }
     }
 
     public Cliente instanciaCliente(ResultSet rs) {
@@ -143,7 +161,8 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
             cliente.setEndereco(rs.getString("endereco"));
             cliente.setNome(rs.getString("nome"));
             cliente.setTelefone(rs.getString("telefone"));
-            cliente.setProcessos(null);
+            cliente.setProcessos(serviceProcesso.findByClientId(cliente.getId()));
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -154,7 +173,7 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
     public void setService(ProcessoService service) {
         this.service = service;
     }
-   
+
     public static String finNomeByClienteID(int id) {
         return "Gabriel";
     }

@@ -1,11 +1,11 @@
 package Application;
 
-import java.awt.AlphaComposite;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Program extends Application {
@@ -17,6 +17,7 @@ public class Program extends Application {
     public void start(Stage primaryStage) { 
         // população do objeto com a janela inicial
         stage = primaryStage;
+        
         try {
             // carrega o FXML contido no aquivo MainView.fxml para o objeto loader
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainView.fxml"));

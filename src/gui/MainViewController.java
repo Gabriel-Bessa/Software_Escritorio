@@ -6,8 +6,12 @@ import Model.entities.Processo;
 import Model.service.ClienteService;
 import Model.service.ProcessoService;
 import gui.util.Alert;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
@@ -31,8 +35,10 @@ import javafx.stage.Stage;
 
 public class MainViewController implements Initializable {
 
-    private ClienteService service = new ClienteService();
+    public static ClienteService serviceCliente = new ClienteService();
+    public static ProcessoService serviceProcesso = new ProcessoService();
 
+    private Cliente c;
     private ObservableList<Cliente> obsList;
 
     @FXML
@@ -40,6 +46,9 @@ public class MainViewController implements Initializable {
 
     @FXML
     private Button btnPesquisar;
+
+    @FXML
+    private Button btnPesquisarCliente;
 
     @FXML
     private Button btnLimpar;
@@ -58,7 +67,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     private TableColumn<Cliente, List<Processo>> tableColumnProcessos;
-    
+
     @FXML
     private TableColumn<Cliente, List<Processo>> tableColumnObservacoes;
 
@@ -67,13 +76,13 @@ public class MainViewController implements Initializable {
 
     @FXML
     private MenuItem menuItemRegistroProcessos;
-    
+
     @FXML
     private MenuItem menuItemAtualizarCliente;
 
     @FXML
     private MenuItem menuItemAtualizarProcessos;
-    
+
     @FXML
     private MenuItem menuItemDeletarCliente;
 
@@ -84,8 +93,66 @@ public class MainViewController implements Initializable {
     private MenuItem menuItemAbout;
 
     @FXML
+    private Button btnArquivoAction;
+
+    @FXML
+    public void onbtnArquivoAction() {
+        if (serviceProcesso == null) {
+            Alert.showAlert("Serviço está nulo!", "Serviço está nulo!", "Serviço está nulo!", AlertType.ERROR);
+        }
+        List<Processo> listaProcesso = serviceProcesso.findAll();
+        String pathProcessos = System.getProperty("user.dir") +  "\\src\\drive\\processos.txt";
+        try ( BufferedWriter bw = new BufferedWriter(new FileWriter(pathProcessos))) {
+            for (Processo p : listaProcesso) {
+                bw.write(p.toString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<Cliente> listaCliente = serviceCliente.findAll();
+        String pathCleintes = System.getProperty("user.dir") +  "\\src\\drive\\clientes.txt";
+        try ( BufferedWriter bw = new BufferedWriter(new FileWriter(pathCleintes))) {
+            for (Cliente c : listaCliente) {
+                bw.write(c.toString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Alert.showAlert("Arquivos!", "Sucesso!", "Arquivos gerados e upados para a nuvem!", AlertType.CONFIRMATION);
+    }
+
+    @FXML
     public void onMenuItemClienteAction() {
         System.out.println("onMenuItemSellerAction");
+    }
+
+    @FXML
+    public void visualizarCliente() {
+        this.c = tableViewPesquisa.getSelectionModel().getSelectedItem();
+        btnPesquisarCliente.setText("Visualizar: " + c.getNome());
+    }
+
+    @FXML
+    public void onBtnPesquisarClienteAction() {
+        if (c == null) {
+            Alert.showAlert("Pesquisa Inválida!", "Cliente Inválido!", "Selecione alguem para ser pesquisado!", AlertType.ERROR);
+        } else {
+            Stage novo = new Stage();
+            novo.setTitle("Cliente");
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CarregarCliente.fxml"));
+                loader.setController(new CarregarClienteController(c));
+                VBox vbox = loader.load();
+
+                novo.setScene(new Scene(vbox));
+                novo.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML
@@ -99,10 +166,11 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    public void onMenuItemRegistrarCliente(){
-        loadView("/gui/ClienteLista.fxml", x -> {} , "");
+    public void onMenuItemRegistrarCliente() {
+        loadView("/gui/ClienteLista.fxml", x -> {
+        }, "");
     }
-    
+
     @FXML
     public void onMenuItemProcessos() {
         loadView("/gui/ProcessosLista.fxml", (ProcessosListaController controller) -> {
@@ -114,7 +182,8 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuItemPesquisaRapidaAction() {
-        loadView("/gui/MainView.fxml", x -> {} , "Main");
+        loadView("/gui/MainView.fxml", x -> {
+        }, "Main");
     }
 
     @FXML
@@ -131,14 +200,16 @@ public class MainViewController implements Initializable {
 
     @Override
     public void initialize(URL uri, ResourceBundle rb) {
-
+        Date data = new Date();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");
+        btnArquivoAction.setText("Gerar arquivo:  " + sdf1.format(data));
     }
 
     public void updateTableView() {
-        if (service == null) {
+        if (serviceCliente == null) {
             throw new IllegalStateException("Service está Nulo!");
         }
-        List<Cliente> list = service.findByPseudo(txtPesquisa.getText());
+        List<Cliente> list = serviceCliente.findByPseudo(txtPesquisa.getText());
         if (list.size() == 0) {
             Alert.showAlert("Pesquisa", "Cliente não encontrado", txtPesquisa.getText() + " não encontrado!", AlertType.ERROR);
         } else {
@@ -165,25 +236,23 @@ public class MainViewController implements Initializable {
         tableColumnEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
         tableColumnProcessos.setCellValueFactory(new PropertyValueFactory<>("processos"));
         tableColumnObservacoes.setCellValueFactory(new PropertyValueFactory<>("observacoes"));
-        
 
         Stage stage = (Stage) getMainScene().getWindow();
         tableViewPesquisa.prefHeightProperty().bind(stage.heightProperty());
     }
-    
+
     private synchronized <T> void loadView(String path, Consumer<T> acaoDeInicializacao, String s) {
         if (s == "Main") {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
                 ScrollPane scrollPane = loader.load();
-                
+
                 VBox main = (VBox) scrollPane.getContent();
                 main.getChildren().remove(0);
-                
+
                 Scene mainScene = getMainScene();
                 VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
 
-                
                 Node mainMenu = mainVBox.getChildren().get(0);
                 mainVBox.getChildren().clear();
                 mainVBox.getChildren().add(mainMenu);

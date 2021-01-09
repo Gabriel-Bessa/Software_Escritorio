@@ -59,7 +59,7 @@
                   <Label layoutX="795.0" layoutY="245.0" text="Nome:" />
                   <TextField fx:id="txtPesquisa" layoutX="842.0" layoutY="241.0" prefHeight="25.0" prefWidth="201.0" promptText="Digite o nome do cliente..." />
                   <Button fx:id="btnPesquisar" layoutX="1049.0" layoutY="241.0" mnemonicParsing="false" onAction="#onBtnPesquisarAction" text="Pesquisar!" />
-                  <TableView fx:id="tableViewPesquisa" layoutY="293.0" prefHeight="411.0" prefWidth="1953.0">
+                  <TableView fx:id="tableViewPesquisa" layoutY="293.0" onMouseClicked="#visualizarCliente" prefHeight="411.0" prefWidth="1953.0">
                     <columns>
                       <TableColumn fx:id="tableColumnNome" prefWidth="270.3999938964844" text="Nome" />
                       <TableColumn fx:id="tableColumnTelefone" minWidth="0.0" prefWidth="299.199951171875" text="Telefone" />
@@ -69,6 +69,8 @@
                     </columns>
                   </TableView>
                   <Button fx:id="btnLimpar" layoutX="1140.0" layoutY="241.0" mnemonicParsing="false" onAction="#limparTableview" text="Limpar!" />
+                  <Button fx:id="btnArquivoAction" layoutX="206.0" layoutY="241.0" mnemonicParsing="false" onAction="#onbtnArquivoAction" prefHeight="25.0" prefWidth="218.0" text="Gerar arquivo:" />
+                  <Button fx:id="btnPesquisarCliente" layoutX="1220.0" layoutY="241.0" mnemonicParsing="false" onAction="#onBtnPesquisarClienteAction" text="Visualizar:" />
                </children>
             </Pane>
             </children>
