@@ -79,11 +79,30 @@ public class ProcessosListaController implements Initializable {
     private ObservableList<Processo> obsList;
 
     @FXML
-    public void onbtnIrParaOPjeAction() {
+    public void onBtnPesquisarProcesso(){
+        Alert.showAlert("Teste", "Teste", "Teste", javafx.scene.control.Alert.AlertType.ERROR);
+    }
+    
+    @FXML
+    public void onbtnIrParaOPjeTRTAction() {
 
         try {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                 Desktop.getDesktop().browse(new URI("https://pje.trt3.jus.br/primeirograu/login.seam"));
+            }
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    @FXML
+    public void onbtnIrParaOPjeTJMGAction() {
+
+        try {
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(new URI("https://pje.tjmg.jus.br/pje/login.seam"));
             }
         } catch (URISyntaxException ex) {
             ex.printStackTrace();
@@ -96,7 +115,7 @@ public class ProcessosListaController implements Initializable {
     public void visualizarProcesso() {
         this.p = tableviewProcessos.getSelectionModel().getSelectedItem();
         this.pesquisa = serviceC.findByClienteById(p.getId_cliente());
-        btnPesquisa.setText("Pesquisar: " + p.getNomeCliente());
+        btnPesquisa.setText("Visualizar: " + p.getNomeCliente());
     }
 
     @FXML

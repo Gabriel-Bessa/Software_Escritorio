@@ -14,6 +14,13 @@ public class Cliente {
     public Cliente() {
     }
 
+    public Cliente(String nome, String telefone, String endereco, String observacoes) {
+        this.nome = nome;
+        this.telefone = telefone;
+        this.endereco = endereco;
+        this.observacoes = observacoes;
+    }
+
     public Cliente(int id, String nome, String telefone, String endereco, String observacoes, List<Processo> processos) {
         this.id = id;
         this.nome = nome;

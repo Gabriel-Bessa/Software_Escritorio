@@ -33,6 +33,9 @@ public class ClienteService {
          dao.setService(service);
     }
 
+    public void insert(Cliente c){
+        dao.inserir(c);
+    }
     
     
 }

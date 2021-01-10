@@ -25,10 +25,11 @@
       <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0">
         <items>
           <Button fx:id="btnNew" mnemonicParsing="false" onAction="#onBtnNewAction" text="Novo" />
-            <Button alignment="CENTER" mnemonicParsing="false" mouseTransparent="true" text="Ir para o TRT" />
-            <Button fx:id="btnIrParaOPje" alignment="CENTER" mnemonicParsing="false" onAction="#onbtnIrParaOPjeAction" text="Ir para o PJE" />
-            <Button fx:id="btnPesquisa" alignment="CENTER" mnemonicParsing="false" onAction="#onBtnPesquisarAction" text="Pesquisar: " />
+            <Button mnemonicParsing="false" onAction="#onbtnIrParaOPjeTJMGAction" text="Ir para o PJE (TJMG)" />
+            <Button fx:id="btnIrParaOPje" alignment="CENTER" mnemonicParsing="false" onAction="#onbtnIrParaOPjeTRTAction" text="Ir para o PJE (TRT)" />
+            <Button mnemonicParsing="false" onAction="#onBtnPesquisarProcesso" text="Pesquisar -&gt;" />
             <TextField fx:id="txtPesquisa" alignment="CENTER" prefHeight="26.0" prefWidth="240.0" promptText="Numero do processo..." />
+            <Button fx:id="btnPesquisa" alignment="CENTER" mnemonicParsing="false" onAction="#onBtnPesquisarAction" text="Visualizar:" />
         </items>
          <padding>
             <Insets left="650.0" />

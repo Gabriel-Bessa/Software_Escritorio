@@ -2,6 +2,7 @@ package Model.DAO.impl;
 
 import Model.DAO.ClienteDAO;
 import Model.entities.Cliente;
+import Model.entities.Processo;
 import Model.service.ProcessoService;
 import db.DB;
 import static gui.MainViewController.serviceProcesso;
@@ -82,13 +83,11 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
             st.setString(1, nome);
             rs = st.executeQuery();
 
+            System.out.println(rs.next());
+            
             while (rs.next()) {
                 Cliente c = new Cliente();
                 c.setId(rs.getInt("cliente_id"));
-                c.setNome(rs.getString("nome"));
-                c.setTelefone(rs.getString("telefone"));
-                c.setEndereco(rs.getString("endereco"));
-                c.setObservacoes(rs.getString("observacoes"));
                 return c;
             }
 
@@ -159,9 +158,14 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
         try {
             cliente.setId(rs.getInt("cliente_id"));
             cliente.setEndereco(rs.getString("endereco"));
+            cliente.setObservacoes(rs.getString("observacoes"));
             cliente.setNome(rs.getString("nome"));
             cliente.setTelefone(rs.getString("telefone"));
-            cliente.setProcessos(serviceProcesso.findByClientId(cliente.getId()));
+            List<Processo> list = serviceProcesso.findByClientId(cliente.getId());
+            for (Processo processo : list) {
+                processo.setNomeCliente(cliente.getNome());
+            }            
+            cliente.setProcessos(list);
 
         } catch (SQLException ex) {
             ex.printStackTrace();

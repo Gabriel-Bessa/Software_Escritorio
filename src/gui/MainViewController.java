@@ -101,17 +101,17 @@ public class MainViewController implements Initializable {
             Alert.showAlert("Serviço está nulo!", "Serviço está nulo!", "Serviço está nulo!", AlertType.ERROR);
         }
         List<Processo> listaProcesso = serviceProcesso.findAll();
-        String pathProcessos = System.getProperty("user.dir") +  "\\src\\drive\\processos.txt";
+        String pathProcessos = System.getProperty("user.dir") + "\\src\\drive\\processos.txt";
         try ( BufferedWriter bw = new BufferedWriter(new FileWriter(pathProcessos))) {
             for (Processo p : listaProcesso) {
-                bw.write(p.toString());
+                bw.write(p.toString(""));
                 bw.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         List<Cliente> listaCliente = serviceCliente.findAll();
-        String pathCleintes = System.getProperty("user.dir") +  "\\src\\drive\\clientes.txt";
+        String pathCleintes = System.getProperty("user.dir") + "\\src\\drive\\clientes.txt";
         try ( BufferedWriter bw = new BufferedWriter(new FileWriter(pathCleintes))) {
             for (Cliente c : listaCliente) {
                 bw.write(c.toString());
@@ -130,8 +130,12 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void visualizarCliente() {
-        this.c = tableViewPesquisa.getSelectionModel().getSelectedItem();
-        btnPesquisarCliente.setText("Visualizar: " + c.getNome());
+        if (c == null) {
+            Alert.showAlert("Pesquisa rápida!", "Error", "Nenhum cliente selecionado!", AlertType.ERROR);
+        } else {
+            this.c = tableViewPesquisa.getSelectionModel().getSelectedItem();
+            btnPesquisarCliente.setText("Visualizar: " + c.getNome());
+        }
     }
 
     @FXML
@@ -167,7 +171,8 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuItemRegistrarCliente() {
-        loadView("/gui/ClienteLista.fxml", x -> {
+        loadView("/gui/ClienteLista.fxml", (ClienteListaController controller) -> {
+            controller.updateTableView();
         }, "");
     }
 

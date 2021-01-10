@@ -69,6 +69,9 @@ public class Processo {
 
     @Override
     public String toString() {
-        return "Processo| id: " + id + ", num: " + num + ", Área: " + causa + ", Nome do Cliente: " + nomecliente + ".";
+        return "Numero: " + num + ", Área: " + causa;
+    }
+    public String toString(String s){
+        return "Processo ->  NUMERO: " + num + ", Área: " + causa + ", Nome do Cliente: " + nomecliente;
     }
 }

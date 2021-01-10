@@ -64,9 +64,12 @@
                       <TableColumn fx:id="tableColumnNome" prefWidth="270.3999938964844" text="Nome" />
                       <TableColumn fx:id="tableColumnTelefone" minWidth="0.0" prefWidth="299.199951171875" text="Telefone" />
                         <TableColumn fx:id="tableColumnEndereco" minWidth="0.0" prefWidth="415.20001220703125" text="Endereço" />
-                        <TableColumn fx:id="tableColumnProcessos" minWidth="0.0" prefWidth="396.7999267578125" text="Processos" />
+                        <TableColumn fx:id="tableColumnProcessos" editable="false" minWidth="0.0" prefWidth="396.7999267578125" text="Processos" />
                         <TableColumn fx:id="tableColumnObservacoes" minWidth="0.0" prefWidth="569.800048828125" text="Observações" />
                     </columns>
+                     <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                     </columnResizePolicy>
                   </TableView>
                   <Button fx:id="btnLimpar" layoutX="1140.0" layoutY="241.0" mnemonicParsing="false" onAction="#limparTableview" text="Limpar!" />
                   <Button fx:id="btnArquivoAction" layoutX="206.0" layoutY="241.0" mnemonicParsing="false" onAction="#onbtnArquivoAction" prefHeight="25.0" prefWidth="218.0" text="Gerar arquivo:" />
