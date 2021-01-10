@@ -178,10 +178,6 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
         this.service = service;
     }
 
-    public static String finNomeByClienteID(int id) {
-        return "Gabriel";
-    }
-
     @Override
     public String findNomeById(int id) {
 

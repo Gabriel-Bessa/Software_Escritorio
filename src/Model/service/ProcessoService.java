@@ -17,7 +17,11 @@ public class ProcessoService {
     public List<Processo> findByClientId(int id) {
         return dao.findByClienteId(id);
     }
-
+    
+    public Processo findByNum(String num){
+        return dao.findByNum(num);
+    }
+    
     public void setService(ClienteService service) {
         dao.setService(service);
     }

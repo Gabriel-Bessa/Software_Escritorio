@@ -15,7 +15,7 @@ public interface ProcessoDAO {
     void atualizarProcesso(Processo p);
     
     // Retorna um processo da base de dados baseados em seu numero
-    Processo findByNum(int num);
+    Processo findByNum(String num);
     
     // Retorna uma lista de processos 
     List<Processo> findById(int ID);

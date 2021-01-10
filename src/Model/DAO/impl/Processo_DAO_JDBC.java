@@ -32,11 +32,11 @@ public class Processo_DAO_JDBC implements ProcessoDAO {
     @Override
     public void inserirProcesso(Processo obj) {
         PreparedStatement st = null;
-        if(service == null){
-            
+        if (service == null) {
+
             Alert.showAlert("Ta fudido meu parceiro!", "AKI", "Ta fudido meu parceiro!", javafx.scene.control.Alert.AlertType.ERROR);
         }
-        
+
         try {
             st = con.prepareStatement("INSERT INTO processos (numero_processo, cliente_id, area) "
                     + "VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
@@ -63,7 +63,7 @@ public class Processo_DAO_JDBC implements ProcessoDAO {
     public void atualizarProcesso(Processo p) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public List<Processo> findById(int ID) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -102,8 +102,35 @@ public class Processo_DAO_JDBC implements ProcessoDAO {
     }
 
     @Override
-    public Processo findByNum(int num) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Processo findByNum(String num) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = con.prepareStatement("SELECT * FROM escritorio_db.processos "
+                    + "where numero_processo = ? ;");
+            st.setString(1, num);
+
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+                Processo p = new Processo();
+
+                p.setCausa(rs.getString("area"));
+                p.setId(rs.getInt("processos_id"));
+                p.setNum(rs.getString("numero_processo"));
+                p.setId_cliente(rs.getInt("cliente_id"));
+                p.setNomeCliente(service.findNomeById(p.getId()));
+
+                return p;
+            }
+
+            return null;
+        } catch (SQLException e) {
+            throw new db.dbException(e.getMessage());
+        } finally {
+            DB.closeResultSet(rs);
+            DB.closeStatement(st);
+        }
     }
 
     @Override

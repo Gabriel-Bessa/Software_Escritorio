@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -80,7 +81,12 @@ public class ProcessosListaController implements Initializable {
 
     @FXML
     public void onBtnPesquisarProcesso(){
-        Alert.showAlert("Teste", "Teste", "Teste", javafx.scene.control.Alert.AlertType.ERROR);
+        Processo processo = serviceProcesso.findByNum(txtPesquisa.getText());
+        List<Processo> listProcesso = new ArrayList<>();
+        listProcesso.add(processo);
+        
+        obsList = FXCollections.observableArrayList(listProcesso);
+        tableviewProcessos.setItems(obsList);        
     }
     
     @FXML
