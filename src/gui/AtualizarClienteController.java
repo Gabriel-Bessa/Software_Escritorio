@@ -9,6 +9,7 @@ import gui.util.Alert;
 import static gui.util.Utils.stageAtual;
 import static gui.MainViewController.serviceCliente;
 import static gui.MainViewController.serviceProcesso;
+import gui.util.Utils;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
@@ -16,6 +17,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +28,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
@@ -65,6 +68,9 @@ public class AtualizarClienteController implements Initializable {
 
     @FXML
     private TableColumn<Cliente, String> tableColumnObservacoes;
+    
+    @FXML
+    private TableColumn<Cliente, Cliente> tableColumnEDIT;
 
     @FXML
     private TableColumn<Cliente, List<Processo>> tableColumnProcesso;
@@ -170,6 +176,26 @@ public class AtualizarClienteController implements Initializable {
         updateTableView();
     }
 
+    private void initEditButtons() {
+        tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+        tableColumnEDIT.setCellFactory(param -> new TableCell<Cliente, Cliente>() {
+            private final Button button = new Button("Editar");
+
+            @Override
+            protected void updateItem(Cliente obj, boolean empty) {
+                super.updateItem(obj, empty);
+                if (obj == null) {
+                    setGraphic(null);
+                    return;
+                }
+                setGraphic(button);
+                button.setOnAction(
+                        event -> createDialogForm(
+                                obj, "/gui/DepartmentForm.fxml", Utils.stageAtual(event)));
+            }
+        });
+    }
+
     public void updateTableView() {
         if (service == null) {
             throw new IllegalStateException("Service está Nulo!");
@@ -177,8 +203,28 @@ public class AtualizarClienteController implements Initializable {
         List<Cliente> list = serviceC.findAll();
         obsList = FXCollections.observableArrayList(list);
         tableviewCliente.setItems(obsList);
+        
+        initEditButtons();
     }
 
+    private void createDialogForm(Cliente obj, String path, Stage parentStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+            Pane pane = loader.load();
+
+            Stage modalStage = new Stage();
+            modalStage.setTitle("Entre com os dados do departamento!");
+            modalStage.setScene(new Scene(pane));
+            modalStage.setResizable(true);
+            modalStage.initOwner(parentStage);
+            modalStage.initModality(Modality.WINDOW_MODAL);
+            modalStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Alert.showAlert("IO Exception", "ERROR", e.getMessage(), javafx.scene.control.Alert.AlertType.ERROR);
+        }
+    }
     private void createDialogForm(String path, Stage parentStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
