@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,16 +19,32 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
 
     private Connection con;
 
-    private ProcessoService service = serviceProcesso;
+    private ProcessoService service;
 
     public Cliente_DAO_JDBC(Connection con) {
         this.con = con;
-
+        this.service = serviceProcesso;
     }
 
     @Override
     public void inserir(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement st = null;
+        try {
+            st = con.prepareStatement("INSERT INTO cliente (nome, telefone, endereco, observacoes) "
+                    + "VALUES (?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
+            st.setString(1, cliente.getNome());
+            st.setString(2, cliente.getTelefone());
+            st.setString(3, cliente.getEndereco());
+            st.setString(4, cliente.getObservacoes());
+
+            int rows = st.executeUpdate();
+            if (rows < 0) {
+                Alert.showAlert("SQLEXception", "Erro no resgistro", "Linhas afetadas: " + rows, javafx.scene.control.Alert.AlertType.ERROR);
+            }
+
+        } catch (SQLException e) {
+            Alert.showAlert("SQLEXception", "Erro no resgistro", e.getMessage(), javafx.scene.control.Alert.AlertType.ERROR);
+        }
     }
 
     @Override
@@ -84,7 +101,7 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
             rs = st.executeQuery();
 
             System.out.println(rs.next());
-            
+
             while (rs.next()) {
                 Cliente c = new Cliente();
                 c.setId(rs.getInt("cliente_id"));
@@ -164,7 +181,7 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
             List<Processo> list = serviceProcesso.findByClientId(cliente.getId());
             for (Processo processo : list) {
                 processo.setNomeCliente(cliente.getNome());
-            }            
+            }
             cliente.setProcessos(list);
 
         } catch (SQLException ex) {

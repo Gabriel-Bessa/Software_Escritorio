@@ -3,17 +3,17 @@ package gui;
 import Application.Program;
 import Model.entities.Cliente;
 import Model.entities.Processo;
-import Model.service.AreaService;
 import Model.service.ClienteService;
 import Model.service.ProcessoService;
 import gui.util.Alert;
 import static gui.util.Utils.stageAtual;
+import static gui.MainViewController.serviceCliente;
+import static gui.MainViewController.serviceProcesso;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -28,69 +28,53 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class ProcessosListaController implements Initializable {
+public class AtualizarClienteController implements Initializable {
 
-    private ProcessoService serviceProcesso;
-    private ClienteService serviceC;
+    private ProcessoService service = serviceProcesso;
 
-    public Processo p;
-
-    private static Cliente pesquisa;
+    private ClienteService serviceC = serviceCliente;
 
     @FXML
-    private ImageView logo;
+    private Button btnPesquisaCliente;
 
     @FXML
-    private Button btnPesquisa;
-
-    @FXML
-    private Button btnTeste;
-
-    @FXML
-    private Button btnIrParaOPje;
+    private Button btnNewCliente;
 
     @FXML
     private TextField txtPesquisa;
 
     @FXML
-    private TableView<Processo> tableviewProcessos;
+    private TableView<Cliente> tableviewCliente;
 
     @FXML
-    private TableColumn<Processo, Integer> tableColumnId;
+    private TableColumn<Cliente, Integer> tableColumnId;
 
     @FXML
-    private TableColumn<Processo, Integer> tableColumnNum;
+    private TableColumn<Cliente, String> tableColumnNome;
 
     @FXML
-    private TableColumn<Processo, String> tableColumnCausa;
+    private TableColumn<Cliente, String> tableColumnTelefone;
 
     @FXML
-    private TableColumn<Processo, String> tableColumnNomeCliente;
+    private TableColumn<Cliente, String> tableColumnEndereco;
 
     @FXML
-    private Button btnNew;
-
-    private ObservableList<Processo> obsList;
+    private TableColumn<Cliente, String> tableColumnObservacoes;
 
     @FXML
-    public void onBtnPesquisarProcesso(){
-        Processo processo = serviceProcesso.findByNum(txtPesquisa.getText());
-        List<Processo> listProcesso = new ArrayList<>();
-        listProcesso.add(processo);
-        
-        obsList = FXCollections.observableArrayList(listProcesso);
-        tableviewProcessos.setItems(obsList);        
-    }
-    
+    private TableColumn<Cliente, List<Processo>> tableColumnProcesso;
+
+    private Cliente clientePesquisa;
+
+    private ObservableList<Cliente> obsList;
+
     @FXML
     public void onbtnIrParaOPjeTRTAction() {
-
         try {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                 Desktop.getDesktop().browse(new URI("https://pje.trt3.jus.br/primeirograu/login.seam"));
@@ -101,10 +85,9 @@ public class ProcessosListaController implements Initializable {
             ex.printStackTrace();
         }
     }
-    
+
     @FXML
     public void onbtnIrParaOPjeTJMGAction() {
-
         try {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                 Desktop.getDesktop().browse(new URI("https://pje.tjmg.jus.br/pje/login.seam"));
@@ -117,39 +100,49 @@ public class ProcessosListaController implements Initializable {
     }
 
     @FXML
-    public void visualizarProcesso() {
-        this.p = tableviewProcessos.getSelectionModel().getSelectedItem();
-        this.pesquisa = serviceC.findByClienteById(p.getId_cliente());
-        btnPesquisa.setText("Visualizar: " + p.getNomeCliente());
-    }
-
-    @FXML
-    public void onBtnPesquisarAction(ActionEvent event) {
-        Stage novo = new Stage();
-        novo.setTitle("Cliente");
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CarregarCliente.fxml"));
-            loader.setController(new CarregarClienteController(pesquisa));
-            VBox vbox = loader.load();
-
-            novo.setScene(new Scene(vbox));
-            novo.show();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void onBtnPesquisarCliente() {
+        String nome = txtPesquisa.getText();
+        List<Cliente> listac = serviceC.findByPseudo(nome);
+        if (listac.size() == 0) {
+            Alert.showAlert("Cliente", "Pesquisa", "Nenhum cliente encontrado com o nome de: " + nome, javafx.scene.control.Alert.AlertType.ERROR);
+        } else {
+            obsList = FXCollections.observableArrayList(listac);
+            tableviewCliente.setItems(obsList);
         }
     }
 
     @FXML
-    public void teste() {
-        Processo p = tableviewProcessos.getSelectionModel().getSelectedItem();
-        this.pesquisa = serviceC.findByClienteById(p.getId_cliente());
+    public void onBtnPesquisarAction() {
+        List<Cliente> list = serviceC.findByPseudo(clientePesquisa.getNome());
+        if (list.size() == 0) {
+            Alert.showAlert("Consulta", "Consulta", "Erro na cunsulta!", javafx.scene.control.Alert.AlertType.ERROR);
+        } else {
+            Stage novo = new Stage();
+            novo.setTitle("Cliente");
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CarregarCliente.fxml"));
+                loader.setController(new CarregarClienteController(clientePesquisa));
+                VBox vbox = loader.load();
+
+                novo.setScene(new Scene(vbox));
+                novo.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    public void onSelecaoDeLinha() {
+        clientePesquisa = tableviewCliente.getSelectionModel().getSelectedItem();
+        btnPesquisaCliente.setText("Visualizar: " + clientePesquisa.getNome());
     }
 
     @FXML
     public void onBtnNewAction(ActionEvent event) {
         Stage parentStage = stageAtual(event);
-        createDialogForm("/gui/FormDepartamento.fxml", parentStage);
+        createDialogForm("/gui/FormCliente.fxml", parentStage);
     }
 
     @Override
@@ -158,7 +151,7 @@ public class ProcessosListaController implements Initializable {
     }
 
     public void setProcessoService(ProcessoService service) {
-        this.serviceProcesso = service;
+        this.service = service;
     }
 
     public void setServiceC(ClienteService serviceC) {
@@ -167,34 +160,32 @@ public class ProcessosListaController implements Initializable {
 
     private void iniciarNodos() {
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tableColumnNum.setCellValueFactory(new PropertyValueFactory<>("num"));
-        tableColumnCausa.setCellValueFactory(new PropertyValueFactory<>("causa"));
-        tableColumnNomeCliente.setCellValueFactory(new PropertyValueFactory<>("nomeCliente"));
+        tableColumnEndereco.setCellValueFactory(new PropertyValueFactory<>("endereco"));
+        tableColumnTelefone.setCellValueFactory(new PropertyValueFactory<>("telefone"));
+        tableColumnNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        tableColumnObservacoes.setCellValueFactory(new PropertyValueFactory<>("observacoes"));
+        tableColumnProcesso.setCellValueFactory(new PropertyValueFactory<>("processos"));
         Stage stage = (Stage) Program.getMainScene().getWindow();
-        tableviewProcessos.prefHeightProperty().bind(stage.heightProperty());
+        tableviewCliente.prefHeightProperty().bind(stage.heightProperty());
+        updateTableView();
     }
 
     public void updateTableView() {
-        if (serviceProcesso == null) {
+        if (service == null) {
             throw new IllegalStateException("Service está Nulo!");
         }
-        List<Processo> list = serviceProcesso.findAll();
+        List<Cliente> list = serviceC.findAll();
         obsList = FXCollections.observableArrayList(list);
-        tableviewProcessos.setItems(obsList);
+        tableviewCliente.setItems(obsList);
     }
 
     private void createDialogForm(String path, Stage parentStage) {
-        FormDepartamentoController controller = new FormDepartamentoController();
-        controller.setService(new AreaService());
-        controller.setServiceCliente(new ClienteService());
-        controller.setServiceProcesso(new ProcessoService());
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
-            loader.setController(controller);
             Pane pane = loader.load();
 
             Stage modalStage = new Stage();
-            modalStage.setTitle("Entre com os dados do requisitados!");
+            modalStage.setTitle("Entre com os dados do departamento!");
             modalStage.setScene(new Scene(pane));
             modalStage.setResizable(true);
             modalStage.initOwner(parentStage);

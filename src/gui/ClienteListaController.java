@@ -6,7 +6,6 @@ import Model.entities.Processo;
 import Model.service.ClienteService;
 import Model.service.ProcessoService;
 import gui.util.Alert;
-import gui.util.Limitante;
 import static gui.util.Utils.stageAtual;
 import static gui.MainViewController.serviceCliente;
 import static gui.MainViewController.serviceProcesso;

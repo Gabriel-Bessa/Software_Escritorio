@@ -96,6 +96,40 @@ public class MainViewController implements Initializable {
     private Button btnArquivoAction;
 
     @FXML
+    public void onMenuItemAboutAction() {
+        loadView("/gui/About.fxml", x -> {
+        }, "");
+    }
+
+    @FXML
+    public void onMenuItemRegistrarCliente() {
+        loadView("/gui/ClienteLista.fxml", (ClienteListaController controller) -> {
+            controller.updateTableView();
+        }, "");
+    }
+
+    @FXML
+    public void onMenuItemProcessos() {
+        loadView("/gui/ProcessosLista.fxml", (ProcessosListaController controller) -> {
+            controller.setProcessoService(new ProcessoService());
+            controller.setServiceC(new ClienteService());
+            controller.updateTableView();
+        }, "");
+    }
+
+    @FXML
+    public void onMenuItemAtualizarProcessoAction() {
+        loadView("/gui/AtualizarProcesso.fxml", x -> {
+        }, "");
+    }
+
+    @FXML
+    public void onMenuItemAtualizarClienteAction() {
+        loadView("/gui/AtualizarCliente.fxml", x -> {
+        }, "");
+    }
+
+    @FXML
     public void onbtnArquivoAction() {
         if (serviceProcesso == null) {
             Alert.showAlert("Serviço está nulo!", "Serviço está nulo!", "Serviço está nulo!", AlertType.ERROR);
@@ -124,21 +158,6 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
-    public void onMenuItemClienteAction() {
-        System.out.println("onMenuItemSellerAction");
-    }
-
-    @FXML
-    public void visualizarCliente() {
-        if (c == null) {
-            Alert.showAlert("Pesquisa rápida!", "Error", "Nenhum cliente selecionado!", AlertType.ERROR);
-        } else {
-            this.c = tableViewPesquisa.getSelectionModel().getSelectedItem();
-            btnPesquisarCliente.setText("Visualizar: " + c.getNome());
-        }
-    }
-
-    @FXML
     public void onBtnPesquisarClienteAction() {
         if (c == null) {
             Alert.showAlert("Pesquisa Inválida!", "Cliente Inválido!", "Selecione alguem para ser pesquisado!", AlertType.ERROR);
@@ -160,6 +179,18 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
+    public void onMenuItemPesquisaRapidaAction() {
+        loadView("/gui/MainView.fxml", x -> {
+        }, "Main");
+    }
+
+    @FXML
+    public void onMenuItemClienteAction() {
+        System.out.println("onMenuItemSellerAction");
+    }
+
+    
+    @FXML
     public void onBtnPesquisarAction() {
         if (txtPesquisa.getText().trim().equals("")) {
             Alert.showAlert("Pesquisa", "Valor inválido!", "Tente com nome válidos!!!", AlertType.ERROR);
@@ -168,39 +199,15 @@ public class MainViewController implements Initializable {
             updateTableView();
         }
     }
-
+    
     @FXML
-    public void onMenuItemRegistrarCliente() {
-        loadView("/gui/ClienteLista.fxml", (ClienteListaController controller) -> {
-            controller.updateTableView();
-        }, "");
-    }
-
-    @FXML
-    public void onMenuItemProcessos() {
-        loadView("/gui/ProcessosLista.fxml", (ProcessosListaController controller) -> {
-            controller.setProcessoService(new ProcessoService());
-            controller.setServiceC(new ClienteService());
-            controller.updateTableView();
-        }, "");
-    }
-
-    @FXML
-    public void onMenuItemPesquisaRapidaAction() {
-        loadView("/gui/MainView.fxml", x -> {
-        }, "Main");
-    }
-
-    @FXML
-    public void teste() {
-        Alert.showAlert("Teste", "Teste", "Teste", AlertType.CONFIRMATION);
-
-    }
-
-    @FXML
-    public void onMenuItemAboutAction() {
-        loadView("/gui/About.fxml", x -> {
-        }, "");
+    public void visualizarCliente() {
+        if (c == null) {
+            Alert.showAlert("Pesquisa rápida!", "Error", "Nenhum cliente selecionado!", AlertType.ERROR);
+        } else {
+            this.c = tableViewPesquisa.getSelectionModel().getSelectedItem();
+            btnPesquisarCliente.setText("Visualizar: " + c.getNome());
+        }
     }
 
     @Override

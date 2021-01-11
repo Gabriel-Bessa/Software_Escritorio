@@ -19,14 +19,13 @@ public class Processo_DAO_JDBC implements ProcessoDAO {
 
     private Connection con;
 
-    private ClienteService service = serviceCliente;
+    private ClienteService service;
 
-    public void setService(ClienteService service) {
-        this.service = service;
-    }
 
     public Processo_DAO_JDBC(Connection con) {
         this.con = con;
+        
+        this.service = serviceCliente;
     }
 
     @Override
@@ -77,10 +76,6 @@ public class Processo_DAO_JDBC implements ProcessoDAO {
         try {
             st = con.prepareStatement("SELECT * FROM escritorio_db.processos");
             rs = st.executeQuery();
-
-            if (service == null) {
-                Alert.showAlert("T", "T", "T", javafx.scene.control.Alert.AlertType.CONFIRMATION);
-            }
 
             while (rs.next()) {
                 Processo p = new Processo();

@@ -21,10 +21,6 @@ public class ProcessoService {
     public Processo findByNum(String num){
         return dao.findByNum(num);
     }
-    
-    public void setService(ClienteService service) {
-        dao.setService(service);
-    }
 
     public void insert(Processo p) {
         dao.inserirProcesso(p);

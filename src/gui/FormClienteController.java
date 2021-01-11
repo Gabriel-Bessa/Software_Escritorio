@@ -17,7 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
+import javafx.stage.Stage;
 
 public class FormClienteController implements Initializable {
 
@@ -45,6 +45,8 @@ public class FormClienteController implements Initializable {
 
     @FXML
     public void btnSalvarOnAction() {
+        Stage view = (Stage) txtTelefone.getScene().getWindow();
+
         if (txtTelefone.getText().equals("") || txtNome.getText().equals("") || txtEndereco.getText().equals("")) {
             Alert.showAlert("Criar Cliente!", "Error", "Preencha os campos antes de enviar!", javafx.scene.control.Alert.AlertType.ERROR);
         } else {
@@ -55,25 +57,29 @@ public class FormClienteController implements Initializable {
             List<Cliente> c = serviceC.findByPseudo(txtNome.getText());
 
             if (c.size() == 0) {
-                Cliente cliente = new Cliente(endereco, telefone, endereco, observacoes);
+                Cliente cliente = new Cliente(nome, telefone, endereco, observacoes);
                 Alert.showAlert("Criar Cliente!", "Sucesso!", "Cliente inserido na base de dados", javafx.scene.control.Alert.AlertType.CONFIRMATION);
-                //serviceC.insert(cliente);
+                serviceC.insert(cliente);
+                view.close();
             } else {
                 for (Cliente cliente : c) {
                     if (!txtNome.getText().equals(cliente.getNome())) {
                         Cliente clienteT = new Cliente(nome, telefone, endereco, observacoes);
-                        //serviceC.insert(cliente);
+                        serviceC.insert(cliente);
                         Alert.showAlert("Criar Cliente!", "Sucesso!", "Cliente inserido na base de dados", javafx.scene.control.Alert.AlertType.CONFIRMATION);
+                        view.close();
                     } else {
                         if (!telefone.equals(cliente.getTelefone())) {
                             Cliente clienteT = new Cliente(nome, telefone, endereco, observacoes);
-                            //serviceC.insert(cliente);
+                            serviceC.insert(cliente);
                             Alert.showAlert("Criar Cliente!", "Sucesso!", "Cliente inserido na base de dados", javafx.scene.control.Alert.AlertType.CONFIRMATION);
+                            view.close();
                         } else {
                             if (!endereco.equals(cliente.getEndereco())) {
                                 Cliente clienteE = new Cliente(nome, telefone, endereco, observacoes);
-                                //serviceC.insert(cliente);
+                                serviceC.insert(cliente);
                                 Alert.showAlert("Criar Cliente!", "Sucesso!", "Cliente inserido na base de dados", javafx.scene.control.Alert.AlertType.CONFIRMATION);
+                                view.close();
                             } else {
                                 Alert.showAlert("Criar Cliente", "Error", "Cliente já está no Banco de Dados", javafx.scene.control.Alert.AlertType.ERROR);
                             }
