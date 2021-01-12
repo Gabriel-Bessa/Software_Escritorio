@@ -54,7 +54,20 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
 
     @Override
     public void atualizar(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement st = null;
+        try {
+            st = con.prepareStatement("UPDATE cliente "
+                    + "SET nome = ?, telefone = ?, endereco =?, observacoes =? "
+                    + "WHERE cliente_id =?;");
+            st.setString(1, cliente.getNome());
+            st.setString(2, cliente.getTelefone());
+            st.setString(3, cliente.getEndereco());
+            st.setString(4, cliente.getObservacoes());
+            st.setInt(5, cliente.getId());
+            
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
     }
 
     @Override

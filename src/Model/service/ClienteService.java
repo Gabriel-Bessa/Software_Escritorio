@@ -37,5 +37,8 @@ public class ClienteService {
         dao.inserir(c);
     }
     
-    
+    public void update(Cliente c){
+        dao.atualizar(c);
+    }
+        
 }

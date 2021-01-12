@@ -47,6 +47,9 @@ public class AtualizarClienteController implements Initializable {
 
     @FXML
     private Button btnNewCliente;
+    
+    @FXML
+    private Button btnAtualizarTabela;
 
     @FXML
     private TextField txtPesquisa;
@@ -140,6 +143,12 @@ public class AtualizarClienteController implements Initializable {
     }
 
     @FXML
+    public void onBtnAtualizarTableAction(){
+        updateTableView();
+        Alert.showAlert("Tabela Atualizada!", "Atualização feita!", "Agora todos os conteudos estão atualizados!", javafx.scene.control.Alert.AlertType.CONFIRMATION);
+    }
+    
+    @FXML
     public void onSelecaoDeLinha() {
         clientePesquisa = tableviewCliente.getSelectionModel().getSelectedItem();
         btnPesquisaCliente.setText("Visualizar: " + clientePesquisa.getNome());
@@ -191,7 +200,7 @@ public class AtualizarClienteController implements Initializable {
                 setGraphic(button);
                 button.setOnAction(
                         event -> createDialogForm(
-                                obj, "/gui/DepartmentForm.fxml", Utils.stageAtual(event)));
+                                obj, "/gui/AtualizarClienteForm.fxml", Utils.stageAtual(event)));
             }
         });
     }
@@ -208,8 +217,10 @@ public class AtualizarClienteController implements Initializable {
     }
 
     private void createDialogForm(Cliente obj, String path, Stage parentStage) {
+        AtualizarClienteFormController controller = new AtualizarClienteFormController(obj);
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));            
+            loader.setController(controller);
             Pane pane = loader.load();
 
             Stage modalStage = new Stage();

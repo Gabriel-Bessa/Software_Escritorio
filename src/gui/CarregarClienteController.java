@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import Model.entities.Cliente;
 import Model.entities.Processo;
-import Model.service.ProcessoService;
 import static gui.MainViewController.serviceProcesso;
 import java.awt.Desktop;
 import java.io.IOException;
@@ -102,7 +96,6 @@ public class CarregarClienteController implements Initializable {
     }
 
     public void preencherDados() {
-        ProcessoService service = new ProcessoService();
         txtTitulo.setText("DADOS DO CLIENTE: " + c.getNome());
         txtNome.setText(c.getNome());
         txtEndereco.setText(c.getEndereco());

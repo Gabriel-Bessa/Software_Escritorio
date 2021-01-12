@@ -81,9 +81,6 @@ public class MainViewController implements Initializable {
     private MenuItem menuItemAtualizarCliente;
 
     @FXML
-    private MenuItem menuItemAtualizarProcessos;
-
-    @FXML
     private MenuItem menuItemDeletarCliente;
 
     @FXML
@@ -114,12 +111,6 @@ public class MainViewController implements Initializable {
             controller.setProcessoService(new ProcessoService());
             controller.setServiceC(new ClienteService());
             controller.updateTableView();
-        }, "");
-    }
-
-    @FXML
-    public void onMenuItemAtualizarProcessoAction() {
-        loadView("/gui/AtualizarProcesso.fxml", x -> {
         }, "");
     }
 

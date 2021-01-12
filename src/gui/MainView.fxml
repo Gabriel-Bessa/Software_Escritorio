@@ -33,7 +33,6 @@
                   <Menu mnemonicParsing="false" text="Atualizar">
                      <items>
                         <MenuItem fx:id="menuItemAtualizarCliente" mnemonicParsing="false" onAction="#onMenuItemAtualizarClienteAction" text="Cliente" />
-                        <MenuItem fx:id="menuItemAtualizarProcessos" mnemonicParsing="false" onAction="#onMenuItemAtualizarProcessoAction" text="Processo" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Excluir">
