@@ -37,7 +37,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Excluir">
                      <items>
-                        <MenuItem fx:id="menuItemDeletarCliente" mnemonicParsing="false" text="Cliente" />
+                        <MenuItem fx:id="menuItemDeletarCliente" mnemonicParsing="false" onAction="#onMenuItemDeletarCliente" text="Cliente" />
                         <MenuItem fx:id="menuItemDeletarProcessos" mnemonicParsing="false" text="Processo" />
                      </items>
                   </Menu>

@@ -40,5 +40,9 @@ public class ClienteService {
     public void update(Cliente c){
         dao.atualizar(c);
     }
+    
+    public void deletar(Cliente c){
+        dao.apagar(c);
+    }
         
 }

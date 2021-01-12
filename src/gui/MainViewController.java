@@ -93,6 +93,10 @@ public class MainViewController implements Initializable {
     private Button btnArquivoAction;
 
     @FXML
+    public void onMenuItemDeletarCliente(){
+        loadView("/gui/DeletarCliente.fxml", x -> {}, "");
+    }
+    @FXML
     public void onMenuItemAboutAction() {
         loadView("/gui/About.fxml", x -> {
         }, "");
