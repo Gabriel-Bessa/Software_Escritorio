@@ -1,6 +1,7 @@
 package gui;
 
 import Application.Program;
+import static Application.Program.icon;
 import Model.entities.Cliente;
 import Model.entities.Processo;
 import Model.service.AreaService;
@@ -8,6 +9,8 @@ import Model.service.ClienteService;
 import Model.service.ProcessoService;
 import gui.util.Alert;
 import static gui.util.Utils.stageAtual;
+import static gui.MainViewController.serviceCliente;
+import static gui.MainViewController.serviceProcesso;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
@@ -36,7 +39,14 @@ import javafx.stage.Stage;
 
 public class ProcessosListaController implements Initializable {
 
-    private ProcessoService serviceProcesso;
+    public ProcessosListaController() {
+        this.serviceC = serviceCliente;
+        this.serviceP = serviceProcesso;
+    }
+    
+    
+
+    private ProcessoService serviceP;
     private ClienteService serviceC;
 
     public Processo p;
@@ -127,7 +137,7 @@ public class ProcessosListaController implements Initializable {
     public void onBtnPesquisarAction(ActionEvent event) {
         Stage novo = new Stage();
         novo.setTitle("Cliente");
-
+        novo.getIcons().add(icon);
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CarregarCliente.fxml"));
             loader.setController(new CarregarClienteController(pesquisa));
@@ -158,7 +168,7 @@ public class ProcessosListaController implements Initializable {
     }
 
     public void setProcessoService(ProcessoService service) {
-        this.serviceProcesso = service;
+        this.serviceP = service;
     }
 
     public void setServiceC(ClienteService serviceC) {
@@ -172,6 +182,7 @@ public class ProcessosListaController implements Initializable {
         tableColumnNomeCliente.setCellValueFactory(new PropertyValueFactory<>("nomeCliente"));
         Stage stage = (Stage) Program.getMainScene().getWindow();
         tableviewProcessos.prefHeightProperty().bind(stage.heightProperty());
+        updateTableView();
     }
 
     public void updateTableView() {
@@ -194,6 +205,7 @@ public class ProcessosListaController implements Initializable {
             Pane pane = loader.load();
 
             Stage modalStage = new Stage();
+            modalStage.getIcons().add(icon);
             modalStage.setTitle("Entre com os dados do requisitados!");
             modalStage.setScene(new Scene(pane));
             modalStage.setResizable(true);

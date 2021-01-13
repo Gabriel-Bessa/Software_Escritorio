@@ -16,7 +16,7 @@
 
 <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1800.0" prefWidth="2000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
     <content>
-        <VBox prefHeight="1199.0" prefWidth="1423.0">
+        <VBox prefHeight="1199.0" prefWidth="2004.0">
             <children>
                 <MenuBar>
                     <menus>
@@ -38,7 +38,7 @@
                   <Menu mnemonicParsing="false" text="Excluir">
                      <items>
                         <MenuItem fx:id="menuItemDeletarCliente" mnemonicParsing="false" onAction="#onMenuItemDeletarCliente" text="Cliente" />
-                        <MenuItem fx:id="menuItemDeletarProcessos" mnemonicParsing="false" text="Processo" />
+                        <MenuItem fx:id="menuItemDeletarProcessos" mnemonicParsing="false" onAction="#onMenuItemDeletarProcesso" text="Processo" />
                      </items>
                   </Menu>
                         <Menu mnemonicParsing="false" text="Help">
@@ -48,7 +48,7 @@
                         </Menu>
                     </menus>
                 </MenuBar>
-            <Pane prefHeight="1250.0" prefWidth="1600.0">
+            <Pane prefHeight="1174.0" prefWidth="1964.0">
                <children>
                   <Text layoutX="810.0" layoutY="211.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PESQUISA RÁPIDA" textAlignment="CENTER" wrappingWidth="265.33673095703125">
                      <font>
@@ -58,7 +58,7 @@
                   <Label layoutX="795.0" layoutY="245.0" text="Nome:" />
                   <TextField fx:id="txtPesquisa" layoutX="842.0" layoutY="241.0" prefHeight="25.0" prefWidth="201.0" promptText="Digite o nome do cliente..." />
                   <Button fx:id="btnPesquisar" layoutX="1049.0" layoutY="241.0" mnemonicParsing="false" onAction="#onBtnPesquisarAction" text="Pesquisar!" />
-                  <TableView fx:id="tableViewPesquisa" layoutY="293.0" onMouseClicked="#visualizarCliente" prefHeight="411.0" prefWidth="1953.0">
+                  <TableView fx:id="tableViewPesquisa" layoutY="283.0" onMouseClicked="#visualizarCliente" prefHeight="411.0" prefWidth="1953.0">
                     <columns>
                       <TableColumn fx:id="tableColumnNome" prefWidth="270.3999938964844" text="Nome" />
                       <TableColumn fx:id="tableColumnTelefone" minWidth="0.0" prefWidth="299.199951171875" text="Telefone" />

@@ -1,6 +1,7 @@
 package gui;
 
 import Application.Program;
+import static Application.Program.icon;
 import Model.entities.Cliente;
 import Model.entities.Processo;
 import Model.service.ClienteService;
@@ -127,6 +128,7 @@ public class AtualizarClienteController implements Initializable {
             Alert.showAlert("Consulta", "Consulta", "Erro na cunsulta!", javafx.scene.control.Alert.AlertType.ERROR);
         } else {
             Stage novo = new Stage();
+            novo.getIcons().add(icon);
             novo.setTitle("Cliente");
 
             try {
@@ -224,6 +226,7 @@ public class AtualizarClienteController implements Initializable {
             Pane pane = loader.load();
 
             Stage modalStage = new Stage();
+            modalStage.getIcons().add(icon);
             modalStage.setTitle("Entre com os dados do departamento!");
             modalStage.setScene(new Scene(pane));
             modalStage.setResizable(true);
@@ -242,6 +245,7 @@ public class AtualizarClienteController implements Initializable {
             Pane pane = loader.load();
 
             Stage modalStage = new Stage();
+            modalStage.getIcons().add(icon);
             modalStage.setTitle("Entre com os dados do departamento!");
             modalStage.setScene(new Scene(pane));
             modalStage.setResizable(true);

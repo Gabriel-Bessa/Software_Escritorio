@@ -13,10 +13,14 @@ public class Program extends Application {
     public static Scene mainScene;
     // Objeto referente a janela principal
     public static Stage stage;
+    // Imagem de icone global
+    public static Image icon;
+    
 
     public void start(Stage primaryStage) { 
         // população do objeto com a janela inicial
         stage = primaryStage;
+        icon = new Image("file:///" +System.getProperty("user.dir")+"\\img\\logo.png");
         
         try {
             // carrega o FXML contido no aquivo MainView.fxml para o objeto loader
@@ -28,6 +32,8 @@ public class Program extends Application {
             scrollPane.setFitToHeight(true);
             scrollPane.setFitToWidth(true);
 
+            // Adicona icone
+            stage.getIcons().add(icon);
             // Atualização da scene principal com a criação de uma nova com base no objeto scrollpane
             mainScene = new Scene(scrollPane);
             // Coloca a scene na janela principal

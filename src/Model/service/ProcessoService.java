@@ -25,4 +25,8 @@ public class ProcessoService {
     public void insert(Processo p) {
         dao.inserirProcesso(p);
     }
+    
+    public void Deletar(Processo p) {
+        dao.deletarProcesso(p);
+    }
 }

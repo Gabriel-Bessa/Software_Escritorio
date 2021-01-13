@@ -49,7 +49,15 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
 
     @Override
     public void apagar(Cliente cliente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement st = null;
+        try {
+            st = con.prepareStatement("DELETE FROM cliente "
+                    + "WHERE cliente_id = ?");
+            st.setInt(1, cliente.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -87,7 +95,7 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
                         rs.getString("telefone"),
                         rs.getString("endereco"),
                         rs.getString("observacoes"),
-                        null);
+                        serviceProcesso.findByClientId(id));
                 return c;
             }
 
@@ -109,15 +117,15 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
 
         try {
             st = con.prepareStatement("SELECT * FROM cliente "
-                    + "WHERE nome = ?");
-            st.setString(1, nome);
+                    + "WHERE nome LIKE ?");
+            st.setString(1, "%" + nome + "%");
             rs = st.executeQuery();
 
-            System.out.println(rs.next());
 
             while (rs.next()) {
                 Cliente c = new Cliente();
                 c.setId(rs.getInt("cliente_id"));
+                System.out.println(c.getId());
                 return c;
             }
 

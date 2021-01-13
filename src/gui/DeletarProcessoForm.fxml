@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane layoutX="69.0" layoutY="122.0" prefHeight="215.0" prefWidth="634.0" AnchorPane.leftAnchor="69.0" AnchorPane.topAnchor="122.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.4000244140625" minWidth="10.0" prefWidth="115.9999755859375" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="398.39996337890625" minWidth="10.0" prefWidth="398.39996337890625" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="219.5999755859375" minWidth="10.0" prefWidth="116.8000366210938" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="104.20001831054688" minHeight="10.0" prefHeight="57.59998779296875" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="110.9999755859375" minHeight="10.0" prefHeight="62.399984741210936" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="114.00000610351562" minHeight="10.0" prefHeight="68.79997558593749" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="54.00000610351563" minHeight="6.799993896484381" prefHeight="28.000024414062494" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="118.0" text="Numero:">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font></Label>
+            <TextField fx:id="txtNum" editable="false" GridPane.columnIndex="1" />
+            <Label fx:id="labelErrorNome" textFill="RED" GridPane.columnIndex="2" />
+            <HBox prefHeight="26.0" prefWidth="398.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <children>
+                  <Button fx:id="btnSalvar" mnemonicParsing="false" onAction="#onBtnDeletarAction" text="Deletar" />
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#obBtnCancelarAction" text="Cancelar" />
+               </children>
+            </HBox>
+            <Label alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="112.0" text="Área:" textAlignment="RIGHT" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font></Label>
+            <Label prefHeight="26.0" prefWidth="144.0" text="Nome Cliente:" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font></Label>
+            <TextField fx:id="txtNomeCliente" editable="false" prefHeight="26.0" prefWidth="375.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtArea" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <Text layoutX="226.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CADASTRO DE PROCESSOS">
+         <font>
+            <Font name="Comic Sans MS Bold" size="18.0" />
+         </font>
+      </Text>
+      <TextField fx:id="txtConfirm" layoutX="171.0" layoutY="348.0" promptText="Digite SIM para confirmar" visible="false" />
+      <Label fx:id="txtConfirmLabel" layoutX="14.0" layoutY="352.0" text="Confirme a exclusão!" visible="false" />
+   </children>
+</AnchorPane>

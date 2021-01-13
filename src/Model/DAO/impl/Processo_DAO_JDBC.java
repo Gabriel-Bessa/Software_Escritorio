@@ -31,11 +31,6 @@ public class Processo_DAO_JDBC implements ProcessoDAO {
     @Override
     public void inserirProcesso(Processo obj) {
         PreparedStatement st = null;
-        if (service == null) {
-
-            Alert.showAlert("Ta fudido meu parceiro!", "AKI", "Ta fudido meu parceiro!", javafx.scene.control.Alert.AlertType.ERROR);
-        }
-
         try {
             st = con.prepareStatement("INSERT INTO processos (numero_processo, cliente_id, area) "
                     + "VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
@@ -55,7 +50,17 @@ public class Processo_DAO_JDBC implements ProcessoDAO {
 
     @Override
     public void deletarProcesso(Processo p) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement st = null;
+        try {
+            st = con.prepareStatement("DELETE FROM processos "
+                    + "WHERE processos_id = ?");
+            st.setInt(1, p.getId());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
@@ -158,9 +163,21 @@ public class Processo_DAO_JDBC implements ProcessoDAO {
             DB.closeResultSet(rs);
             DB.closeStatement(st);
         }
+        
     }
 
-    /*
+    /*private void removeProcessoDoCliente(Processo p){
+        int id = p.getId_cliente();
+        Cliente c = service.findByClienteById(id);
+        List<Processo> list = c.getProcessos();
         
-     */
+        for (Processo processo : list) {
+            if(p.getNum().equals(processo.getNum())){
+                System.out.println(p.getNum());
+            }
+        }
+        
+        c.setProcessos(list);
+        service.update(c);
+    }*/
 }

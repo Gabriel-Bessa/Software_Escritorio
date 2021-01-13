@@ -1,6 +1,7 @@
 package gui;
 
 import static Application.Program.getMainScene;
+import static Application.Program.icon;
 import Model.entities.Cliente;
 import Model.entities.Processo;
 import Model.service.ClienteService;
@@ -97,6 +98,10 @@ public class MainViewController implements Initializable {
         loadView("/gui/DeletarCliente.fxml", x -> {}, "");
     }
     @FXML
+    public void onMenuItemDeletarProcesso(){
+        loadView("/gui/DeletarProcesso.fxml", x -> {}, "");
+    }
+    @FXML
     public void onMenuItemAboutAction() {
         loadView("/gui/About.fxml", x -> {
         }, "");
@@ -130,7 +135,7 @@ public class MainViewController implements Initializable {
             Alert.showAlert("Serviço está nulo!", "Serviço está nulo!", "Serviço está nulo!", AlertType.ERROR);
         }
         List<Processo> listaProcesso = serviceProcesso.findAll();
-        String pathProcessos = System.getProperty("user.dir") + "\\src\\drive\\processos.txt";
+        String pathProcessos = "C:\\drive\\processos.txt";
         try ( BufferedWriter bw = new BufferedWriter(new FileWriter(pathProcessos))) {
             for (Processo p : listaProcesso) {
                 bw.write(p.toString(""));
@@ -140,7 +145,7 @@ public class MainViewController implements Initializable {
             e.printStackTrace();
         }
         List<Cliente> listaCliente = serviceCliente.findAll();
-        String pathCleintes = System.getProperty("user.dir") + "\\src\\drive\\clientes.txt";
+        String pathCleintes = "C:\\drive\\clientes.txt";
         try ( BufferedWriter bw = new BufferedWriter(new FileWriter(pathCleintes))) {
             for (Cliente c : listaCliente) {
                 bw.write(c.toString());
@@ -159,6 +164,7 @@ public class MainViewController implements Initializable {
         } else {
             Stage novo = new Stage();
             novo.setTitle("Cliente");
+            novo.getIcons().add(icon);
 
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/CarregarCliente.fxml"));
@@ -197,7 +203,7 @@ public class MainViewController implements Initializable {
     
     @FXML
     public void visualizarCliente() {
-        if (c == null) {
+        if (tableViewPesquisa.getSelectionModel().getSelectedItem() == null) {
             Alert.showAlert("Pesquisa rápida!", "Error", "Nenhum cliente selecionado!", AlertType.ERROR);
         } else {
             this.c = tableViewPesquisa.getSelectionModel().getSelectedItem();
