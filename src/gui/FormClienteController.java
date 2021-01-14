@@ -62,30 +62,26 @@ public class FormClienteController implements Initializable {
                 serviceC.insert(cliente);
                 view.close();
             } else {
+                Cliente clienteT = new Cliente(nome, telefone, endereco, observacoes);
+                boolean achou = false;
                 for (Cliente cliente : c) {
                     if (!txtNome.getText().equals(cliente.getNome())) {
-                        Cliente clienteT = new Cliente(nome, telefone, endereco, observacoes);
-                        serviceC.insert(cliente);
-                        Alert.showAlert("Criar Cliente!", "Sucesso!", "Cliente inserido na base de dados", javafx.scene.control.Alert.AlertType.CONFIRMATION);
-                        view.close();
                     } else {
                         if (!telefone.equals(cliente.getTelefone())) {
-                            Cliente clienteT = new Cliente(nome, telefone, endereco, observacoes);
-                            serviceC.insert(cliente);
-                            Alert.showAlert("Criar Cliente!", "Sucesso!", "Cliente inserido na base de dados", javafx.scene.control.Alert.AlertType.CONFIRMATION);
-                            view.close();
                         } else {
                             if (!endereco.equals(cliente.getEndereco())) {
-                                Cliente clienteE = new Cliente(nome, telefone, endereco, observacoes);
-                                serviceC.insert(cliente);
-                                Alert.showAlert("Criar Cliente!", "Sucesso!", "Cliente inserido na base de dados", javafx.scene.control.Alert.AlertType.CONFIRMATION);
-                                view.close();
                             } else {
-                                Alert.showAlert("Criar Cliente", "Error", "Cliente já está no Banco de Dados", javafx.scene.control.Alert.AlertType.ERROR);
+                                achou = true;
                             }
                         }
                     }
-
+                }
+                if (achou == false) {
+                    serviceC.insert(clienteT);
+                    view.close();
+                    Alert.showAlert("Criar Cliente", "Sucesso!", "Cliente foi cadastrado no Banco de Dados!", javafx.scene.control.Alert.AlertType.CONFIRMATION);
+                } else {
+                    Alert.showAlert("Criar Cliente", "Error", "Cliente já está no Banco de Dados", javafx.scene.control.Alert.AlertType.ERROR);
                 }
             }
 

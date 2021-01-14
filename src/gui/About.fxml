@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" style="-fx-background-color: lightgray;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label text="About">
-         <font>
-            <Font name="System Bold" size="19.0" />
-         </font>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-         <padding>
-            <Insets bottom="10.0" left="20.0" top="10.0" />
-         </padding>
-      </Label>
-      <Label text="JavaFX - Application Demo">
-         <padding>
-            <Insets left="20.0" />
-         </padding>
-      </Label>
+      <Pane prefHeight="906.0" prefWidth="1600.0" style="-fx-background-color: lightgray; -fx-border-radius: 30;">
+         <children>
+            <ImageView fitHeight="254.0" fitWidth="265.0" layoutX="6.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/logo.png" />
+               </image>
+            </ImageView>
+            <Text layoutX="552.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sobre o Software" wrappingWidth="508.53680419921875">
+               <font>
+                  <Font name="Viner Hand ITC" size="66.0" />
+               </font>
+            </Text>
+            <Line endX="735.4000244140625" endY="-29.599990844726562" layoutX="653.0" layoutY="148.0" startX="-312.6000061035156" startY="8.800018310546875" />
+            <Pane layoutX="209.0" layoutY="208.0" prefHeight="567.0" prefWidth="1182.0" style="-fx-border-color: black; -fx-border-radius: 150 10 150 10; -fx-border-color: gray; -fx-border-width: 3;">
+               <children>
+                  <Text layoutX="20.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="           Software feito em Java, utilizando MySQL e JavaFX para complementar a aplicação. Para o desenvolvimento desta aplicação o desenvolvedor (Gabriel Bessa | https://github.com/Gabriel-Bessa), visualizou um problema de gestão de processos e clientes de uma empresa. Após o estudo do problema, cujo foco era a desorganização e mal aproveitamento dos recursos, salvando assim os dados em meio físico através de documento em papel, foram contatados os donos do estabelecimento para o estudo do que era necessário que o software possui-se para resolver o problema desde modo chegamos em acordo que o modelo atual é suficiente para o problema." textAlignment="JUSTIFY" wrappingWidth="1141.3367462158203">
+                     <font>
+                        <Font name="System Bold" size="30.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <ImageView fitHeight="288.0" fitWidth="324.0" layoutX="1276.0" layoutY="686.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/java.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
    </children>
 </VBox>

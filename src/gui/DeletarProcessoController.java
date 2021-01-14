@@ -100,6 +100,15 @@ public class DeletarProcessoController implements Initializable {
     private Button btnNew;
 
     private ObservableList<Processo> obsList;
+    
+    @FXML
+    private Button btnAtualizarTabela;
+
+    @FXML
+    public void onBtnAtualizarTableAction() {
+        updateTableView();
+        Alert.showAlert("Tabela Atualizada!", "Atualização feita!", "Agora todos os conteudos estão atualizados!", javafx.scene.control.Alert.AlertType.CONFIRMATION);
+    }
 
     @FXML
     public void onBtnPesquisarProcesso() {

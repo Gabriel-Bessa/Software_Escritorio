@@ -125,7 +125,6 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
             while (rs.next()) {
                 Cliente c = new Cliente();
                 c.setId(rs.getInt("cliente_id"));
-                System.out.println(c.getId());
                 return c;
             }
 
@@ -138,7 +137,6 @@ public class Cliente_DAO_JDBC implements ClienteDAO {
         }
         return null;
     }
-
     @Override
     public List<Cliente> findByPseudoNome(String nome) {
         PreparedStatement st = null;

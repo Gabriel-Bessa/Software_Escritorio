@@ -89,6 +89,14 @@ public class ProcessosListaController implements Initializable {
     private ObservableList<Processo> obsList;
 
     @FXML
+    private Button btnAtualizarTabela;
+
+    @FXML
+    public void onBtnAtualizarTableAction() {
+        updateTableView();
+        Alert.showAlert("Tabela Atualizada!", "Atualização feita!", "Agora todos os conteudos estão atualizados!", javafx.scene.control.Alert.AlertType.CONFIRMATION);
+    }
+    @FXML
     public void onBtnPesquisarProcesso(){
         Processo processo = serviceProcesso.findByNum(txtPesquisa.getText());
         List<Processo> listProcesso = new ArrayList<>();

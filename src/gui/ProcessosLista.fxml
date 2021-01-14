@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1600.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProcessosListaController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ProcessosListaController">
    <children>
       <Label prefHeight="20.0" prefWidth="186.0" text="Registro De Processo">
          <font>
@@ -29,22 +29,23 @@
             <Button fx:id="btnIrParaOPje" alignment="CENTER" mnemonicParsing="false" onAction="#onbtnIrParaOPjeTRTAction" text="Ir para o PJE (TRT)" />
             <Button mnemonicParsing="false" onAction="#onBtnPesquisarProcesso" text="Pesquisar -&gt;" />
             <TextField fx:id="txtPesquisa" alignment="CENTER" prefHeight="26.0" prefWidth="240.0" promptText="Numero do processo..." />
+            <Button fx:id="btnAtualizarTabela" mnemonicParsing="false" onAction="#onBtnAtualizarTableAction" text="Atualizar Tabela!" />
             <Button fx:id="btnPesquisa" alignment="CENTER" mnemonicParsing="false" onAction="#onBtnPesquisarAction" text="Visualizar:" />
         </items>
          <padding>
-            <Insets left="650.0" />
+            <Insets left="400.0" />
          </padding>
       </ToolBar>
-      <HBox prefHeight="348.0" prefWidth="1800.0">
+      <HBox prefHeight="900.0" prefWidth="1600.0">
          <children>
             <Pane prefHeight="571.0" prefWidth="1800.0">
                <children>
-                  <TableView fx:id="tableviewProcessos" layoutX="442.0" layoutY="21.0" onMouseClicked="#visualizarProcesso" prefHeight="100.0" prefWidth="1001.0">
+                  <TableView fx:id="tableviewProcessos" layoutX="269.0" layoutY="38.0" onMouseClicked="#visualizarProcesso" prefHeight="267.0" prefWidth="1061.0">
                      <columns>
                         <TableColumn fx:id="tableColumnId" prefWidth="77.60000306367874" text="Id" />
-                        <TableColumn fx:id="tableColumnNum" minWidth="0.0" prefWidth="304.0" text="Numero" />
-                        <TableColumn fx:id="tableColumnCausa" prefWidth="284.0001220703125" text="Causa" />
-                        <TableColumn fx:id="tableColumnNomeCliente" prefWidth="332.7999267578125" text="Nome Cliente" />
+                        <TableColumn fx:id="tableColumnNum" minWidth="0.0" prefWidth="335.2000427246094" text="Numero" />
+                        <TableColumn fx:id="tableColumnCausa" prefWidth="272.0001220703125" text="Causa" />
+                        <TableColumn fx:id="tableColumnNomeCliente" prefWidth="374.39990234375" text="Nome Cliente" />
                      </columns>
                   </TableView>
                </children>

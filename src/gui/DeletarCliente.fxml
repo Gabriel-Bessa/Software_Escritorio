@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1600.0" prefWidth="1900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DeletarClienteController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DeletarClienteController">
    <children>
       <Label prefHeight="20.0" prefWidth="186.0" text="Excluir Clientes">
          <font>
@@ -40,15 +40,15 @@
          <children>
             <Pane prefHeight="571.0" prefWidth="1800.0">
                <children>
-                  <TableView fx:id="tableviewCliente" layoutX="7.0" layoutY="30.0" onMouseClicked="#onSelecaoDeLinha" prefHeight="100.0" prefWidth="1886.0">
+                  <TableView fx:id="tableviewCliente" layoutX="6.0" layoutY="7.0" onMouseClicked="#onSelecaoDeLinha" prefHeight="70.0" prefWidth="1588.0">
                      <columns>
                         <TableColumn fx:id="tableColumnId" prefWidth="87.20000839233398" text="Id" />
                         <TableColumn fx:id="tableColumnNome" minWidth="0.0" prefWidth="275.1999969482422" text="Nome" />
-                        <TableColumn fx:id="tableColumnTelefone" prefWidth="228.0" text="Telefone" />
-                        <TableColumn fx:id="tableColumnEndereco" prefWidth="409.60015869140625" text="Endereço" />
-                        <TableColumn fx:id="tableColumnProcesso" prefWidth="614.4000244140625" text="Processos" />
-                        <TableColumn fx:id="tableColumnObservacoes" prefWidth="181.60009765625" text="Observações" />
-                        <TableColumn fx:id="tableColumnEDIT" prefWidth="97.5999755859375" text="Editar" />
+                        <TableColumn fx:id="tableColumnTelefone" prefWidth="208.79998779296875" text="Telefone" />
+                        <TableColumn fx:id="tableColumnEndereco" prefWidth="232.0" text="Endereço" />
+                        <TableColumn fx:id="tableColumnProcesso" prefWidth="499.2000732421875" text="Processos" />
+                        <TableColumn fx:id="tableColumnObservacoes" prefWidth="169.60003662109375" text="Observações" />
+                        <TableColumn fx:id="tableColumnEDIT" prefWidth="114.4000244140625" text="Deletar" />
                      </columns>
                   </TableView>
                </children>

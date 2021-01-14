@@ -47,6 +47,9 @@ public class ClienteListaController implements Initializable {
     private Button btnNewCliente;
 
     @FXML
+    private Button btnAtualizarTabela;
+
+    @FXML
     private TextField txtPesquisa;
 
     @FXML
@@ -73,6 +76,12 @@ public class ClienteListaController implements Initializable {
     private Cliente clientePesquisa;
 
     private ObservableList<Cliente> obsList;
+
+    @FXML
+    public void onBtnAtualizarTableAction() {
+        updateTableView();
+        Alert.showAlert("Tabela Atualizada!", "Atualização feita!", "Agora todos os conteudos estão atualizados!", javafx.scene.control.Alert.AlertType.CONFIRMATION);
+    }
 
     @FXML
     public void onbtnIrParaOPjeTRTAction() {

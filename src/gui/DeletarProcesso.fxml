@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1600.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DeletarProcessoController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DeletarProcessoController">
    <children>
-      <Label prefHeight="20.0" prefWidth="186.0" text="Registro De Processo">
+      <Label prefHeight="20.0" prefWidth="186.0" text="Exclusão De Processos">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -29,23 +29,24 @@
             <Button fx:id="btnIrParaOPje" alignment="CENTER" mnemonicParsing="false" onAction="#onbtnIrParaOPjeTRTAction" text="Ir para o PJE (TRT)" />
             <Button mnemonicParsing="false" onAction="#onBtnPesquisarProcesso" text="Pesquisar -&gt;" />
             <TextField fx:id="txtPesquisa" alignment="CENTER" prefHeight="26.0" prefWidth="240.0" promptText="Numero do processo..." />
+            <Button fx:id="btnAtualizarTabela" mnemonicParsing="false" onAction="#onBtnAtualizarTableAction" text="Atualizar Tabela" />
             <Button fx:id="btnPesquisa" alignment="CENTER" mnemonicParsing="false" onAction="#onBtnPesquisarAction" text="Visualizar:" />
         </items>
          <padding>
             <Insets left="650.0" />
          </padding>
       </ToolBar>
-      <HBox prefHeight="348.0" prefWidth="1800.0">
+      <HBox prefHeight="900.0" prefWidth="1600.0">
          <children>
-            <Pane prefHeight="571.0" prefWidth="1800.0">
+            <Pane prefHeight="900.0" prefWidth="1600.0">
                <children>
-                  <TableView fx:id="tableviewProcessos" layoutX="442.0" layoutY="21.0" onMouseClicked="#visualizarProcesso" prefHeight="100.0" prefWidth="1089.0">
+                  <TableView fx:id="tableviewProcessos" layoutX="79.0" layoutY="14.0" onMouseClicked="#visualizarProcesso" prefHeight="164.0" prefWidth="1442.0">
                      <columns>
                         <TableColumn fx:id="tableColumnId" prefWidth="77.60000306367874" text="Id" />
-                        <TableColumn fx:id="tableColumnNum" minWidth="0.0" prefWidth="304.0" text="Numero" />
-                        <TableColumn fx:id="tableColumnCausa" prefWidth="284.0001220703125" text="Causa" />
-                        <TableColumn fx:id="tableColumnNomeCliente" prefWidth="332.7999267578125" text="Nome Cliente" />
-                        <TableColumn fx:id="tableColumnEDIT" prefWidth="88.0" text="Deletar" />
+                        <TableColumn fx:id="tableColumnNum" minWidth="0.0" prefWidth="534.3999786376953" text="Numero" />
+                        <TableColumn fx:id="tableColumnCausa" prefWidth="164.800048828125" text="Causa" />
+                        <TableColumn fx:id="tableColumnNomeCliente" prefWidth="560.0000610351562" text="Nome Cliente" />
+                        <TableColumn fx:id="tableColumnEDIT" minWidth="0.0" prefWidth="103.199951171875" text="Deletar" />
                      </columns>
                   </TableView>
                </children>

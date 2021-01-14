@@ -35,7 +35,7 @@ public class Processo_DAO_JDBC implements ProcessoDAO {
             st = con.prepareStatement("INSERT INTO processos (numero_processo, cliente_id, area) "
                     + "VALUES (?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             st.setString(1, obj.getNum());
-            st.setInt(2, service.findByNome(obj.getNomeCliente()).getId());
+            st.setInt(2, obj.getId_cliente());
             st.setString(3, obj.getCausa());
 
             int rows = st.executeUpdate();

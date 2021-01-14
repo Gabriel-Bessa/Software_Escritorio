@@ -79,10 +79,30 @@ public class AtualizarClienteFormController implements Initializable {
                 } else {
                     c.setTelefone(txtTelefone.getText());
                     c.setObservacoes(txtObservacoes.getText());
-                    serviceC.update(c);
-                    Alert.showAlert("Atualizar Cliente", "Sucesso!", "Dados atualizados com sucesso!", javafx.scene.control.Alert.AlertType.CONFIRMATION);
+                    List<Cliente> all = serviceC.findByPseudo(txtNome.getText());
+                    boolean achou = false;
                     Stage now = (Stage) txtEndereco.getScene().getWindow();
-                    now.close();
+                    for (Cliente cliente : all) {
+                        if (!c.getNome().equals(cliente.getNome())) {
+                        } else {
+                            if(!c.getEndereco().equals(cliente.getEndereco())){
+                            }else{
+                                if(!c.getTelefone().equals(cliente.getTelefone())){
+                                }else {
+                                    achou = true;
+                                }
+                            }
+                        }
+
+                    }
+
+                    if (achou == false) {
+                        serviceC.update(c);
+                        Alert.showAlert("Atualizar Cliente", "Sucesso!", "Dados atualizados com sucesso!", javafx.scene.control.Alert.AlertType.CONFIRMATION);
+                        now.close();
+                    }else {
+                        Alert.showAlert("Atualizar Cliente","Error", "Cliente já existente na base de dados", javafx.scene.control.Alert.AlertType.ERROR);
+                    }
                 }
             }
         }
